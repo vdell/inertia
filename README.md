@@ -1,4 +1,4 @@
-inertia
+Inertia
 =======
 
-Space-themed Breakout clone
+Space-themed Breakout clone created using ClanLib and C++. 
