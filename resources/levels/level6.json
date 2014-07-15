@@ -1,0 +1,167 @@
+{
+	"metadata": {
+		"level_name": "Foreplay",
+		"author": "Ville Lindell",
+		"author_email": "spam@me.com",
+		"level_version": 0.1
+	},
+	"settings": {
+		"global_row_aligment": "center"
+	},
+	"rows": {
+		"row": {
+			"empty": 1
+		},
+		"row": {
+			"block": {
+				"name": "row0_top",
+				"id": "grey"
+			}
+		},
+		"row": {
+			"block": {
+				"position_after": "row0_top",
+				"id": "green",
+				"name": "row1_right"
+			},
+			"block": {
+				"position_before": "row0_top",
+				"id": "green",
+				"name": "row1_left"
+			}
+		},
+		"row": {
+			"block": {
+				"position_after": "row1_right",
+				"id": "green",
+				"name": "row2_right"
+			},
+			"block": {
+				"position_before": "row1_left",
+				"id": "green",
+				"name": "row2_left"
+			}
+		},
+		"row": {
+			"block": {
+				"position_after": "row2_right",
+				"id": "yellow",
+				"name": "row3_right"
+			},
+			"block": {
+				"position_before": "row2_left",
+				"id": "yellow",
+				"name": "row3_left"
+			}
+		},
+		"row": {
+			"block": {
+				"position_after": "row3_right",
+				"id": "yellow",
+				"name": "row4_right"
+			},
+			"block": {
+				"position_before": "row3_left",
+				"id": "yellow",
+				"name": "row4_left"
+			}
+		},
+		"row": {
+			"block": {
+				"position_after": "row4_right",
+				"id": "red",
+				"name": "row5_right"
+			},
+			"block": {
+				"position_before": "row4_left",
+				"id": "red",
+				"name": "row5_left"
+			}
+		},
+		"row": {
+			"block": {
+				"position_after": "row5_right",
+				"id": "grey",
+				"name": "row6_right"
+			},
+			"block": {
+				"position_before": "row5_left",
+				"id": "grey",
+				"name": "row6_left"
+			}
+		},
+	
+		"row": {
+			"block": {
+				"position_before": "row1_left",
+				"id": "yellow",
+				"name": "inner_right"
+			},
+			"block": {
+				"position_after": "row1_right",
+				"id": "yellow",
+				"name": "inner_left"
+			}
+		},	
+		
+		"row": {
+			"empty": 1
+		},
+		"row": {
+			"block": {
+				"position_after": "row5_left",
+				"id": "grey",
+				"name": "row7_right"
+			},
+			"block": {
+				"position_before": "row5_right",
+				"id": "grey",
+				"name": "row7_left"
+			}
+		},		
+		"row": {
+			"block": {
+				"position_before": "row7_left",
+				"id": "grey",
+				"name": "row8_right"
+			},
+			"block": {
+				"position_after": "row7_right",
+				"id": "grey",
+				"name": "row8_left"
+			}
+		},	
+		"row": {
+			"block": {
+				"position_after": "row8_left",
+				"id": "green",
+				"name": "row9_right"
+			},
+			"block": {
+				"position_before": "row8_right",
+				"id": "green",
+				"name": "row9_left"
+			}
+		},
+		"row": {
+			"block": {
+				"position_before": "row9_left",
+				"id": "green",
+				"name": "row10_right"
+			},
+			"block": {
+				"position_after": "row9_right",
+				"id": "green",
+				"name": "row10_left"
+			}
+		},
+		"row": {
+			"block": {
+				"position_after": "row10_left",
+				"id": "grey",
+				"name": "row11_right"
+			}
+		}		
+	}
+}	
+		

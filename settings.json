@@ -1,0 +1,49 @@
+{
+    "debug": {
+        "enable_box2d_debug_draw": false,
+        "log_file": "why.log"
+    },
+    "game": {
+        "core": {
+            "game_area_width": 1360,
+            "game_area_height": 768,
+            "game_area_color_hex": "#001328",
+			"paddle_btm_margin_perc": 0.05
+        },
+        "physics": {
+            "gravity_x": 0.0,
+            "gravity_y": -9.8,
+            "physic_scale": 30,
+            "block_density": 1.0,
+            "block_friction": 0.0,
+            "block_restitution": 1.0,
+            "ball_density": 1.0,
+            "ball_restitution": 1.0,
+            "ball_friction": 0.0,
+            "paddle_density": 1.0,
+            "paddle_restitution": 1.0,
+            "paddle_friction": 0.0
+        },
+        "video": {
+            "resolution_width": 1360,
+            "resolution_height": 1024,
+			"enable_fullscreen": false
+        },
+		"sound": {
+			"music_volume": 0.0,
+			"sfx_volume": 0.5
+		},
+        "paths": {
+            "resources_root": "../resources/",
+            "art": "art/png/",
+            "fonts": "fonts/",
+			"levels": "levels/",
+			"music": "audio/music/"
+        },
+        "defaults": {
+            "block_health": 2,
+            "ball_damage": 1,
+            "player_lives": 3
+        }
+    }
+}

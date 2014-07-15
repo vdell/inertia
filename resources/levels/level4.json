@@ -1,0 +1,78 @@
+{
+	"metadata": {
+		"level_name": "Central Mass",
+		"author": "Ville Lindell",
+		"author_email": "spam@me.com",
+		"level_version": 0.1
+	},
+	"settings": {
+		"global_row_aligment": "center"
+	},
+	"rows": {
+		"row": {
+			"empty": 1,
+			"repeat": 2
+		},	
+		"row": {
+			"repeat": 3,
+			"block": {
+				"id": "green"
+			},
+			"block": {
+				"id": "transparent"
+			},
+			"block": {
+				"id": "grey"
+			}
+		},
+		"row": {
+			"empty": 1,
+			"repeat": 2
+		},
+		"row": {
+			"alignment": "right",
+			"block": {
+				"id": "green",
+				"repeat-x": 6
+			}
+		},
+		"row": {
+			"alignment": "left",
+			"block": {
+				"id": "yellow",
+				"repeat-x": 6
+			}
+		},
+		"row": {
+			"alignment": "right",
+			"block": {
+				"id": "green",
+				"repeat-x": 6
+			}
+		},
+		"row": {
+			"alignment": "left",
+			"block": {
+				"id": "yellow",
+				"repeat-x": 6
+			}
+		},
+		"row": {
+			"empty": 1,
+			"repeat": 2
+		},
+		"row": {
+			"repeat": 3,
+			"block": {
+				"id": "grey"
+			},
+			"block": {
+				"id": "transparent"
+			},
+			"block": {
+				"id": "yellow"
+			}
+		}
+	}
+}	
+		

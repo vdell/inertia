@@ -1,0 +1,96 @@
+{
+	"metadata": {
+		"level_name": "Foreplay",
+		"author": "Ville Lindell",
+		"author_email": "spam@me.com",
+		"level_version": 0.1
+	},
+	"settings": {
+		"global_row_aligment": "center"
+	},
+	"rows": {
+		"row": {
+			"empty": 1
+		},
+		"row": {
+			"block": {
+				"id": "green",
+				"repeat-x": 2
+			}
+		},
+		"row": {
+			"block": {
+				"id": "yellow",
+				"repeat-x": 4
+			}
+		},
+		"row": {
+			"block": {
+				"id": "red",
+				"repeat-x": 2
+			}
+		},
+		"row": {
+			"empty": 1,
+			"repeat": 7
+		},	
+		"row": {
+			"alignment": "left",
+			"block": {
+				"id": "transparent",
+				"repeat-x": 3
+			},
+			"block": {
+				"id": "green",
+				"repeat-x": 2
+			},
+			"block": {
+				"id": "transparent",
+				"repeat-x": 6
+			},
+			"block": {
+				"id": "green",
+				"repeat-x": 2
+			}		
+		},
+		"row": {
+			"alignment": "left",
+			"block": {
+				"id": "transparent",
+				"repeat-x": 2
+			},	
+			"block": {
+				"id": "yellow",
+				"repeat-x": 4
+			},
+			"block": {
+				"id": "transparent",
+				"repeat-x": 4
+			},
+			"block": {
+				"id": "yellow",
+				"repeat-x": 4
+			}		
+		},
+		"row": {
+			"alignment": "left",
+			"block": {
+				"id": "transparent",
+				"repeat-x": 3
+			},
+			"block": {
+				"id": "red",
+				"repeat-x": 2
+			},
+			"block": {
+				"id": "transparent",
+				"repeat-x": 6
+			},	
+			"block": {
+				"id": "red",
+				"repeat-x": 2
+			}			
+		}
+	}
+}	
+		

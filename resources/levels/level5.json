@@ -1,0 +1,95 @@
+{
+	"metadata": {
+		"level_name": "Last Line Of Defence",
+		"author": "Ville Lindell",
+		"author_email": "spam@me.com",
+		"level_version": 0.1
+	},
+	"settings": {
+		"global_row_aligment": "center"
+	},
+	"rows": {
+		"row": {
+			"empty": 1,
+			"repeat": 2
+		},	
+		
+		"row": {
+			"block": {
+				"id": "grey"
+			},
+			"block": {
+				"id": "transparent"
+			},
+			"block": {
+				"id": "grey"
+			},
+			"block": {
+				"id": "transparent",
+				"repeat-x": 2
+			},
+			"block": {
+				"id": "grey"
+			},
+			"block": {
+				"id": "transparent"
+			},
+			"block": {
+				"id": "grey"
+			}		
+		},		
+		"row": {
+			"repeat": 2,
+			"block": {
+				"id": "blue",
+				"repeat-x": 12
+			}
+		},
+		"row": {
+			"repeat": 2,
+			"block": {
+				"id": "purple",
+				"repeat-x": 12
+			}
+		},
+		"row": {
+			"repeat": 2,
+			"block": {
+				"id": "green",
+				"repeat-x": 12
+			}
+		},
+		"row": {
+			"repeat": 2,
+			"block": {
+				"id": "blue",
+				"repeat-x": 12
+			}
+		},
+		"row": {
+			"block": {
+				"id": "grey"
+			},
+			"block": {
+				"id": "transparent"
+			},
+			"block": {
+				"id": "grey"
+			},
+			"block": {
+				"id": "transparent",
+				"repeat-x": 2
+			},
+			"block": {
+				"id": "grey"
+			},
+			"block": {
+				"id": "transparent"
+			},
+			"block": {
+				"id": "grey"
+			}		
+		}
+	}
+}	
+		

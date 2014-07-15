@@ -1,0 +1,83 @@
+{
+	"metadata": {
+		"level_name": "Pyramid In China",
+		"author": "Ville Lindell",
+		"author_email": "spam@me.com",
+		"level_version": 0.1
+	},
+	"settings": {
+		"global_row_aligment": "center"
+	},
+	"rows": {
+		"row": {
+			"empty": 1,
+			"repeat": 2
+		},
+		"row": {
+			"block": {
+				"id": "green",
+				"repeat-x": 11
+			}
+		},
+		"row": {
+			"block": {
+				"id": "yellow",
+				"repeat-x": 10
+			}
+		},
+		"row": {
+			"block": {
+				"id": "red",
+				"repeat-x": 9
+			}
+		},
+		"row": {
+			"block": {
+				"id": "yellow",
+				"repeat-x": 8
+			}
+		},
+		"row": {
+			"block": {
+				"id": "blue",
+				"repeat-x": 7
+			}
+		},
+		"row": {
+			"block": {
+				"id": "red",
+				"repeat-x": 6
+			}
+		},	
+		"row": {
+			"block": {
+				"id": "red",
+				"repeat-x": 5
+			}
+		},
+		"row": {
+			"block": {
+				"id": "yellow",
+				"repeat-x": 4
+			}
+		},
+		"row": {
+			"block": {
+				"id": "blue",
+				"repeat-x": 3
+			}
+		},
+		"row": {
+			"block": {
+				"id": "yellow",
+				"repeat-x": 2
+			}
+		},
+		"row": {
+			"block": {
+				"id": "green",
+				"repeat-x": 1
+			}
+		}
+	}
+}
