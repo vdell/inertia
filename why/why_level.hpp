@@ -15,17 +15,10 @@ namespace why
 	struct Row
 	{
 	public:
-		Row()
-		{
-		}
-		Row(unsigned int idx, RowAligment aligment, bool empty) :
-			m_index(idx), m_aligment(aligment), m_empty(empty)
-		{
+		Row();
+		Row(unsigned int idx, RowAligment aligment, bool empty);
+		explicit Row(unsigned int idx);
 
-		}
-		explicit Row(unsigned int idx) : m_index(idx)
-		{
-		}
 		unsigned int m_index;
 		RowAligment m_aligment;
 		bool m_empty;

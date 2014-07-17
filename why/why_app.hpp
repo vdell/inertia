@@ -23,9 +23,20 @@ namespace why
 	class Application	
 	{
 	public:
+		//! Constructor
 		Application();
+
+		//! Destructor
 		~Application();
+
+		/* @brief Starts the application
+		 *
+		 * @param args Commandline arguments 
+		 * @return Exit code
+		 **/
 		int start ( const std::vector<std::string> &args );
+
+		//! Returns application settings manager.
 		static const SettingsManager &settings();
 	private:
 		void on_input_down(const clan::InputEvent &key);
