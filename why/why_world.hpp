@@ -9,32 +9,6 @@
 
 namespace why
 {
-	enum class HDirection
-	{
-		Left, Right
-	};
-
-	enum class VDirection
-	{
-		Up, Down
-	};
-
-	class MouseVelocityTracker
-	{
-	public:
-		MouseVelocityTracker(int max_samples = 20);
-		void add_sample(clan::Point pos);
-		void clear_samples();
-
-		void invalidate_samples(clan::ubyte64 time_elapsed_ms_treshold);
-
-		float get_avg_velocity() const;
-	private:
-		clan::ubyte64 m_start_time;
-		std::map < clan::ubyte64, clan::Point > m_samples;
-		const int m_max_samples;
-	};
-
 	/* @brief The game world class
 	 *
 	 * @detail This class takes care of all the things happening in the game world, like e.g. loading levels,
