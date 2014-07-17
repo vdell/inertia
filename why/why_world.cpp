@@ -293,6 +293,11 @@ void why::World::update(float fixed_timestep, clan::ubyte64 time_elapsed_ms, int
 	using namespace clan;
 	using namespace std;
 
+	if (!GameState::is_active(GameStateValue::Playing))
+	{
+		return;
+	}
+
 	m_fixed_timestep_accumulator += time_elapsed_ms;
 	const int steps (Real2Int(m_fixed_timestep_accumulator / fixed_timestep));
 
@@ -317,46 +322,44 @@ void why::World::update(float fixed_timestep, clan::ubyte64 time_elapsed_ms, int
 	m_pworld.clear_forces();
 	smooth_states();
 
-	if (GameState::is_active(GameStateValue::Playing))
-	{	
-		if (is_ball_lost())
+		
+	if (is_ball_lost())
+	{
+		if (kill_ball() == 0)
 		{
-			if (kill_ball() == 0)
-			{
-				kill_bubbles(true);
-				GameState::set(GameStateValue::GameOver);
-			}
-			else
-			{
-				reset_positions();
-				m_level->pause();
-			}
-		}
-		else if (m_level->is_completed())
-		{
-			GameState::set(GameStateValue::LevelCompleted);
 			kill_bubbles(true);
+			GameState::set(GameStateValue::GameOver);
 		}
 		else
 		{
-			kill_bubbles(false);
+			reset_positions();
+			m_level->pause();
+		}
+	}
+	else if (m_level->is_completed())
+	{
+		GameState::set(GameStateValue::LevelCompleted);
+		kill_bubbles(true);
+	}
+	else
+	{
+		kill_bubbles(false);
 
-			static const int req_combo_count_for_bubbles = 2;
+		static const int req_combo_count_for_bubbles = 2;
 
-			// Should we spawn a new bubble?
-			if (m_level->get_combo_count() >= req_combo_count_for_bubbles)
+		// Should we spawn a new bubble?
+		if (m_level->get_combo_count() >= req_combo_count_for_bubbles)
+		{
+			spawn_bubble();
+			m_level->reset_combo_count();
+		}
+
+		for (auto object : m_objects)
+		{
+			auto bo = dynamic_cast<BubbleObject*>(object);
+			if (bo && bo->has_collided_with_paddle())
 			{
-				spawn_bubble();
-				m_level->reset_combo_count();
-			}
 
-			for (auto object : m_objects)
-			{
-				auto bo = dynamic_cast<BubbleObject*>(object);
-				if (bo && bo->has_collided_with_paddle())
-				{
-
-				}
 			}
 		}
 	}
