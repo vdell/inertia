@@ -4,7 +4,7 @@ Inertia
 Space-themed Breakout clone created using ClanLib and C++. 
 
 Screenshots
-===========
+-----------
 
 ![Alt text](/screenshots/v0.1_screenshot1.png?raw=true "Screenshot of the first public release (v0.1)")
 
