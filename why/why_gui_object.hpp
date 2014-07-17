@@ -51,7 +51,7 @@ namespace why
 		const std::string &get_name() const;
 
 		//! Returns the font of the object
-		const clan::Font get_font() const;
+		clan::Font get_font();
 
 		//! Sets the font for the object
 		void set_font(clan::Font f);

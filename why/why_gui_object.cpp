@@ -67,7 +67,7 @@ const std::string &why::GuiObject::get_name() const
 	return m_name;
 }
 
-const clan::Font &why::GuiObject::get_font() const
+clan::Font why::GuiObject::get_font()
 {
 	return m_font;
 }
