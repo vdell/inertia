@@ -6,7 +6,7 @@
 // BallObject
 //////////////////////////////////////////////
 
-why::BallObject::BallObject(ResourceId id, clan::Canvas *canvas, clan::Sprite sprite,
+why::BallObject::BallObject(long id, clan::Canvas *canvas, clan::Sprite sprite,
 	clan::PhysicsContext &pc, unsigned int damage, const SettingsManager &sm,
 	const std::string &name) : MovingObject(id, canvas, sprite, pc, name),
 	clan::CircleShape(pc)

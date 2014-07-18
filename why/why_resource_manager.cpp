@@ -162,3 +162,12 @@ const why::Soundtrack &why::ResourceManager::get_soundtrack() const
 {
 	return m_soundtrack;
 }
+
+why::ResourceId why::ResourceManager::get_id(clan::Sprite s) const
+{
+	for (auto &o : m_sprites)
+	{
+		if (s == o.second) return o.first.resource_id();
+	}
+	return ResourceId::None;
+}

@@ -8,11 +8,13 @@ namespace why
 	//! Forward declaration
 	class Level;
 
+	long get_unique_object_id();
+
 	//! An abstract base class for all game objects.
 	class GameObjectBase
 	{
 	public:
-		GameObjectBase(ResourceId id, const std::string &name);
+		GameObjectBase(long id = -1, const std::string &name = "game_object");
 		virtual ~GameObjectBase();
 
 		GameObjectBase(const GameObjectBase &cpy);
@@ -23,13 +25,13 @@ namespace why
 		virtual const std::string &get_name() const;
 		virtual void set_name(const std::string &name);
 
-		ResourceId get_id() const;
+		long get_id() const;
 
 		virtual void draw(clan::Canvas &c) = 0;
 		virtual void update(clan::ubyte64 time_elapsed_ms);
 	protected:
 		std::string m_name;
-		ResourceId m_id;
+		long m_id;
 	};
 
 	class StaticObject : public GameObjectBase
@@ -40,7 +42,7 @@ namespace why
 		* @param sprite The sprite for this object.
 		* @param name Name of the object (e.g. "player ball"). Can be empty.
 		**/
-		StaticObject(ResourceId id, clan::Sprite sprite, const std::string &name = "static object");
+		StaticObject(long id = -1, clan::Sprite sprite = clan::Sprite(), const std::string &name = "static_object");
 
 		//! Destructor
 		virtual ~StaticObject();
@@ -59,6 +61,8 @@ namespace why
 		void set_rotation(clan::Angle a);
 		clan::Angle get_rotation() const;
 
+		clan::Sprite get_sprite() const;
+
 		clan::Pointf get_sprite_position() const;
 	
 		void set_sprite_position(clan::Pointf pos);
@@ -74,8 +78,8 @@ namespace why
 	class CollidableObject : public StaticObject, public clan::PhysicsObject
 	{
 	public:
-		CollidableObject(ResourceId id, clan::Canvas *canvas, clan::Sprite sprite,
-			clan::PhysicsContext &pc, const std::string &name = "collidable object");
+		CollidableObject(long id, clan::Canvas *canvas, clan::Sprite sprite,
+			clan::PhysicsContext &pc, const std::string &name = "collidable_object");
 		virtual ~CollidableObject();
 
 		CollidableObject(const CollidableObject &cpy);
@@ -106,9 +110,9 @@ namespace why
 	class DestroyableObject : public CollidableObject
 	{
 	public:
-		DestroyableObject(ResourceId id, clan::Canvas *canvas, clan::Sprite sprite, 
+		DestroyableObject(long id, clan::Canvas *canvas, clan::Sprite sprite, 
 			unsigned int health, clan::PhysicsContext &pc, 
-			const std::string &name = "destroyable object");
+			const std::string &name = "destroyable_object");
 		virtual ~DestroyableObject();
 
 		DestroyableObject(const DestroyableObject &cpy);
@@ -126,8 +130,8 @@ namespace why
 	class MovingObject : public CollidableObject
 	{
 	public:
-		MovingObject(ResourceId id, clan::Canvas *canvas, clan::Sprite sprite,
-			clan::PhysicsContext &pc, const std::string &name = "moving object");
+		MovingObject(long id, clan::Canvas *canvas, clan::Sprite sprite,
+			clan::PhysicsContext &pc, const std::string &name = "moving_object");
 		virtual ~MovingObject();
 
 		MovingObject(const MovingObject &cpy);

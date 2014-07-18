@@ -11,7 +11,7 @@ namespace why
 	class BallObject : public MovingObject, public clan::CircleShape
 	{
 	public:
-		BallObject(ResourceId id, clan::Canvas *canvas, clan::Sprite sprite, clan::PhysicsContext &pc,
+		BallObject(long id, clan::Canvas *canvas, clan::Sprite sprite, clan::PhysicsContext &pc,
 			unsigned int damage, const SettingsManager &sm, const std::string &name = "ball object");
 		virtual ~BallObject();
 

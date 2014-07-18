@@ -5,7 +5,8 @@ namespace why
 	//! Available sprite resources
 	enum class ResourceId
 	{
-		BlockYellow = 1,
+		None = -1,
+		BlockYellow,
 		BlockRed,
 		BlockBlue,
 		BlockGreen,
@@ -13,7 +14,7 @@ namespace why
 		BlockPurple,
 		BlockTransparent,
 		BlockBrown,
-		PlayerPaddle = 100,
+		PlayerPaddle,
 		Spacer,
 		PlayerBall,
 		Bubble,

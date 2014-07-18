@@ -8,7 +8,7 @@
 // PaddleObject
 //////////////////////////////////////////////
 
-why::PaddleObject::PaddleObject(ResourceId id, clan::Canvas *canvas, clan::Sprite sprite,
+why::PaddleObject::PaddleObject(long id, clan::Canvas *canvas, clan::Sprite sprite,
 	clan::PhysicsContext &pc, const SettingsManager &sm, const std::string &name) :
 	MovingObject(id, canvas, sprite, pc, name), clan::PolygonShape(pc)
 {

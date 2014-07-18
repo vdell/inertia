@@ -142,7 +142,7 @@ why::LevelLoader::block_tuple why::LevelLoader::load_block(const boost::property
 		pos = BlockPosition::BeforeObject;
 	}
 
-	const auto id = str_to_rc_id(from.get<std::string>("id"));
+	const auto rcid = str_to_rc_id(from.get<std::string>("id"));
 
 	const std::string name = get_optional_str("name", from);
 	
@@ -151,9 +151,9 @@ why::LevelLoader::block_tuple why::LevelLoader::load_block(const boost::property
 	if (pos != BlockPosition::Auto)
 	{
 		auto pos_parent = dynamic_cast<const BlockObject*>(m_to.get_object(pafter.empty() ? pbefore : pafter));
-		return make_tuple(block_dummy{ id, name, pos, clone_from, pos_parent }, repeatx);
+		return make_tuple(block_dummy{ rcid, name, pos, clone_from, pos_parent }, repeatx);
 	}
-	return make_tuple(block_dummy{ id, name, pos, clone_from }, repeatx);
+	return make_tuple(block_dummy{ rcid, name, pos, clone_from }, repeatx);
 }
 
 std::string why::LevelLoader::get_optional_str(const std::string &name, const boost::property_tree::ptree &from,
@@ -209,20 +209,20 @@ void why::LevelLoader::add_block(Row row, unsigned int repeat_block, block_dummy
 	{
 		GameObjectBase *o = nullptr;
 
-		if (bd.id == ResourceId::BlockTransparent)
+		if (bd.rcid == ResourceId::BlockTransparent)
 		{
 			o = new SpacerObject(m_rcm.get_sprite(ResourceId::BlockTransparent).get_size());
 		}
 		else if (bd.clone_from)
 		{
 			o = new BlockObject(*bd.clone_from);
-			o->set_name("block object");
+			o->set_name("block_object");
 		}
 		else
 		{
-			o = new BlockObject(bd.id, &m_canvas,
-				m_rcm.get_sprite(bd.id), 1, m_pc, m_sm, 
-				(bd.name.empty() ? "block object" : bd.name), bd.pos, bd.pos_parent);
+			o = new BlockObject(-1, &m_canvas,
+				m_rcm.get_sprite(bd.rcid), 1, m_pc, m_sm, 
+				(bd.name.empty() ? "block_object" : bd.name), bd.pos, bd.pos_parent);
 		}
 		m_to.add_object(row, o);
 	}
@@ -303,7 +303,7 @@ void why::Level::load(const std::string &path, clan::Canvas &c, const ResourceMa
 		for (auto obj : row.second)
 		{
 			BlockObject *bo = dynamic_cast<BlockObject*>(obj);
-			if (bo && bo->get_id() == ResourceId::BlockGrey)
+			if (bo && rcm.get_id(bo->get_sprite()) == ResourceId::BlockGrey)
 			{
 				bo->enable_destruction(false);	
 			}
@@ -622,8 +622,7 @@ bool why::Level::is_completed() const
 	{
 		for (auto o : o_pair.second)
 		{
-			if (o->get_id() != ResourceId::BlockGrey &&
-				o->get_id() != ResourceId::BlockTransparent)
+			if (is_destroyable(o))
 			{
 				all_blocks_gone = false;
 				break;
@@ -631,6 +630,20 @@ bool why::Level::is_completed() const
 		}
 	}
 	return all_blocks_gone;
+}
+
+bool why::Level::is_destroyable(const GameObjectBase *gob) const
+{
+	const BlockObjectBase *bob = dynamic_cast<const BlockObjectBase *>(gob);
+	assert(bob);
+	if (dynamic_cast <const SpacerObject *>(bob)) return false;
+
+	const DestroyableObject *desto = dynamic_cast <const DestroyableObject*>(bob);
+	if (desto)
+	{
+		return desto->is_destruction_enabled();
+	}
+	return false;
 }
 
 void why::Level::start_timer()

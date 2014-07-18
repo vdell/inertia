@@ -2,7 +2,7 @@
 #include "why_bubble_object.hpp"
 #include "why_paddle_object.hpp"
 
-why::BubbleObject::BubbleObject(ResourceId id, clan::Canvas *canvas, clan::Sprite sprite,
+why::BubbleObject::BubbleObject(long id, clan::Canvas *canvas, clan::Sprite sprite,
 	clan::PhysicsContext &pc, const SettingsManager &sm, const std::string &name) :
 	MovingObject(id, canvas, sprite, pc, name), clan::CircleShape(pc), m_has_collided_with_paddle(false)
 {

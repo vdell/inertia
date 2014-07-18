@@ -7,8 +7,8 @@ namespace why
 	class BubbleObject : public MovingObject, public clan::CircleShape
 	{
 	public:
-		BubbleObject(ResourceId id, clan::Canvas *canvas, clan::Sprite sprite, clan::PhysicsContext &pc,
-			const SettingsManager &sm, const std::string &name = "bubble object");
+		BubbleObject(long id, clan::Canvas *canvas, clan::Sprite sprite, clan::PhysicsContext &pc,
+			const SettingsManager &sm, const std::string &name = "bubble_object");
 
 		virtual ~BubbleObject();
 

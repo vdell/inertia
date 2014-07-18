@@ -11,8 +11,8 @@ namespace why
 	class PaddleObject : public MovingObject, public clan::PolygonShape
 	{
 	public:
-		PaddleObject(ResourceId id, clan::Canvas *canvas, clan::Sprite sprite, clan::PhysicsContext &pc,
-			const SettingsManager &sm, const std::string &name = "paddle object");
+		PaddleObject(long id, clan::Canvas *canvas, clan::Sprite sprite, clan::PhysicsContext &pc,
+			const SettingsManager &sm, const std::string &name = "paddle_object");
 		virtual ~PaddleObject();
 
 		PaddleObject(const PaddleObject &cpy);

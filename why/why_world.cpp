@@ -80,11 +80,11 @@ void why::World::initialize()
 	create_physics();
 	create_area();
 
-	m_ball = new BallObject(ResourceId::PlayerBall, m_canvas,
-		m_rc_manager->get_sprite(ResourceId::PlayerBall), m_pworld.get_pc(), 1, m_settings);
+	m_ball = new BallObject(-1, m_canvas, m_rc_manager->get_sprite(ResourceId::PlayerBall),
+		m_pworld.get_pc(), 1, m_settings);
 	add_object(m_ball);
-	m_paddle = new PaddleObject(ResourceId::PlayerPaddle,
-		m_canvas, m_rc_manager->get_sprite(ResourceId::PlayerPaddle), m_pworld.get_pc(), m_settings);
+	m_paddle = new PaddleObject(-1, m_canvas, m_rc_manager->get_sprite(ResourceId::PlayerPaddle), 
+		m_pworld.get_pc(), m_settings);
 	add_object(m_paddle);
 
 	slot_mouse_move = m_parent->get_ic().get_mouse().sig_pointer_move().connect(this, &World::on_mouse_move);
@@ -368,7 +368,7 @@ void why::World::update(float fixed_timestep, clan::ubyte64 time_elapsed_ms, int
 void why::World::spawn_bubble()
 {
 	// The memory is released when the bubble is below the game area or when the level is completed.
-	auto b = new BubbleObject(ResourceId::Bubble, m_canvas, m_rc_manager->get_sprite(ResourceId::Bubble), m_pworld.get_pc(), m_settings);
+	auto b = new BubbleObject(-1, m_canvas, m_rc_manager->get_sprite(ResourceId::Bubble), m_pworld.get_pc(), m_settings);
 	b->set_body_position(clan::Vec2f(m_area.get_center().x, m_area.top + b->get_height()));
 	b->align_sprite_with_body();
 	add_object(b);

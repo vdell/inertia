@@ -39,6 +39,8 @@ namespace why
 		 **/
 		void load(const std::string &resouces_path);
 
+		ResourceId get_id(clan::Sprite s) const;
+
 		clan::Sprite get_sprite(ResourceId id) const;
 
 		//! Returns a copy of the preloaded font

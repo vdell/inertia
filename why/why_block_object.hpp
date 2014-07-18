@@ -42,6 +42,8 @@ namespace why
 		virtual float margin_bottom() const;
 
 		bool is_positioned();
+
+		void set_destryable(bool value = true);
 	protected:
 		bool m_is_positioned;
 		static const float m_default_margin_x;
@@ -69,12 +71,12 @@ namespace why
 
 	/*! @brief Block object
 	*
-	* @detail Blocks are the objects that the player  tries to destroy with his mighty err...balls.
+	* @detail Blocks are the objects that the player tries to destroy with his mighty err...balls.
 	*/
 	class BlockObject : public BlockObjectBase, public DestroyableObject, public clan::PolygonShape
 	{
 	public:
-		BlockObject(ResourceId id, clan::Canvas *canvas, clan::Sprite sprite, unsigned int health,
+		BlockObject(long id, clan::Canvas *canvas, clan::Sprite sprite, unsigned int health,
 			clan::PhysicsContext &pc, const SettingsManager &sm, const std::string &name = "block object",
 			BlockPosition pos = BlockPosition::Auto, const BlockObject *pos_parent = nullptr);
 		virtual ~BlockObject();

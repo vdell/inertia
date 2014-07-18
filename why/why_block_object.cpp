@@ -48,7 +48,7 @@ float why::BlockObjectBase::margin_left() const
 // BlockObject
 //////////////////////////////////////////////
 
-why::BlockObject::BlockObject(ResourceId id, clan::Canvas *canvas, clan::Sprite sprite,
+why::BlockObject::BlockObject(long id, clan::Canvas *canvas, clan::Sprite sprite,
 	unsigned int health, clan::PhysicsContext &pc, const SettingsManager &sm,
 	const std::string &name, BlockPosition pos, const BlockObject *pos_parent) :
 	DestroyableObject(id, canvas, sprite, health, pc, name), clan::PolygonShape(pc),
@@ -145,8 +145,7 @@ unsigned int why::BlockObject::hit(unsigned int damage, const MovingObject *hitt
 //////////////////////////////////////////////
 
 
-why::SpacerObject::SpacerObject(clan::Size s, const std::string &name) :
-GameObjectBase(ResourceId::BlockTransparent, name)
+why::SpacerObject::SpacerObject(clan::Size s, const std::string &name) : GameObjectBase(-1, name)
 {
 	m_size = s;
 }

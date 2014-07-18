@@ -5,11 +5,25 @@
 #include "why_ball_object.hpp"
 
 //////////////////////////////////////////////
+// Free Functions
+//////////////////////////////////////////////
+
+long why::get_unique_object_id()
+{
+	static int counter = 0;
+	return ++counter;
+}
+
+//////////////////////////////////////////////
 // GameObjectBase
 //////////////////////////////////////////////
 
-why::GameObjectBase::GameObjectBase(ResourceId id, const std::string &name) : m_name(name), m_id(id)
+why::GameObjectBase::GameObjectBase(long id, const std::string &name) : m_name(name), m_id(id)
 {
+	if (m_id == -1)
+	{
+		m_id = get_unique_object_id();
+	}
 }
 
 why::GameObjectBase::~GameObjectBase()
@@ -28,7 +42,7 @@ const std::string &why::GameObjectBase::get_name() const
 	return m_name;
 }
 
-why::ResourceId why::GameObjectBase::get_id() const
+long why::GameObjectBase::get_id() const
 {
 	return m_id;
 }
@@ -48,7 +62,7 @@ void why::GameObjectBase::update(clan::ubyte64 time_elapsed_ms)
 //////////////////////////////////////////////
 
 
-why::StaticObject::StaticObject(ResourceId id, clan::Sprite sprite, const std::string &name) :
+why::StaticObject::StaticObject(long id, clan::Sprite sprite, const std::string &name) :
 GameObjectBase(id, name), m_sprite(sprite.clone())
 {
 	if (!m_sprite.is_null())
@@ -127,11 +141,16 @@ clan::Angle why::StaticObject::get_rotation() const
 	return m_sprite.get_angle();
 }
 
+clan::Sprite why::StaticObject::get_sprite() const
+{
+	return m_sprite;
+}
+
 //////////////////////////////////////////////
 // CollidableObject
 //////////////////////////////////////////////
 
-why::CollidableObject::CollidableObject(ResourceId id, clan::Canvas *canvas, clan::Sprite sprite,
+why::CollidableObject::CollidableObject(long id, clan::Canvas *canvas, clan::Sprite sprite,
 	clan::PhysicsContext &pc, const std::string &name) : StaticObject(id, sprite, name)
 {
 	using namespace clan;
@@ -217,7 +236,7 @@ void why::CollidableObject::align_sprite_with_body()
 // DestroyableObject
 //////////////////////////////////////////////
 
-why::DestroyableObject::DestroyableObject(ResourceId id, clan::Canvas *canvas, clan::Sprite sprite,
+why::DestroyableObject::DestroyableObject(long id, clan::Canvas *canvas, clan::Sprite sprite,
 	unsigned int health, clan::PhysicsContext &pc, const std::string &name) : CollidableObject
 	(id, canvas, sprite, pc, name), m_health(health)
 {
@@ -270,7 +289,7 @@ void why::DestroyableObject::enable_destruction(bool value)
 // MovingObject
 //////////////////////////////////////////////
 
-why::MovingObject::MovingObject(ResourceId id, clan::Canvas *canvas, clan::Sprite sprite,
+why::MovingObject::MovingObject(long id, clan::Canvas *canvas, clan::Sprite sprite,
 	clan::PhysicsContext &pc, const std::string &name) : CollidableObject(id, canvas, sprite, pc, name)
 {
 
