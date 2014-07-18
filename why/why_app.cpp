@@ -402,7 +402,17 @@ void why::Application::draw_lives_left(clan::Canvas &c)
 
 void why::Application::draw_main_menu(clan::Canvas &c)
 {
+	using namespace clan;
 	m_main_menu->draw(c);
+
+	const std::string ver (std::string(INERTIA_VERSION) + "v");
+	Font f = m_rc_manager->get_font();
+
+	Pointf vpos;
+	vpos.x = c.get_width() - (ver.length() * f.get_font_metrics().get_average_character_width() + 10.0f);
+	vpos.y = c.get_height() - 10.0f;
+
+	f.draw_text(c, vpos, ver);
 }
 
 void why::Application::draw_credits(clan::Canvas &c)
