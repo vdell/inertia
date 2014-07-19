@@ -215,11 +215,11 @@ void why::Application::create_main_menu()
 	using namespace clan;
 
 	typedef MenuItemId mid;
-	Sprite sprite(m_rc_manager->get_sprite(ResourceId::MainMenuBackground));
+
 	Font f(m_rc_manager->get_font(50));
-	const unsigned int id(static_cast<unsigned int>(ResourceId::MainMenu));
 	
-	m_main_menu = new Menu(window, f, sprite, Pointf(100.0, 250.0f), id, "main_menu");
+	m_main_menu = new Menu(window, f, 
+		m_rc_manager->get_sprite(ResourceId::MainMenuBackground), Pointf(100.0, 250.0f), -1, "main_menu");
 
 	*m_main_menu 
 		<< MenuItem(*m_main_menu, f, mid::ResumeGame, "Resume")
