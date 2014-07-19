@@ -1,8 +1,7 @@
 #include "pch.hpp"
 #include "why_game_object.hpp"
 #include "why_real2int.hpp"
-#include "why_block_object.hpp"
-#include "why_ball_object.hpp"
+#include "why_game_object_modifier.hpp"
 
 //////////////////////////////////////////////
 // Free Functions
@@ -28,13 +27,29 @@ why::GameObjectBase::GameObjectBase(long id, const std::string &name) : m_name(n
 
 why::GameObjectBase::~GameObjectBase()
 {
-
+	delete_modifiers();
 }
 
 why::GameObjectBase::GameObjectBase(const GameObjectBase &cpy)
 {
 	m_name = cpy.m_name;
 	m_id = cpy.m_id;
+}
+
+void why::GameObjectBase::add_modifier(GameObjectModifierBase *mod)
+{
+	m_modifiers.push_back(mod);
+	m_modifiers.back()->apply();
+}
+
+void why::GameObjectBase::delete_modifiers()
+{
+	for (auto &mod : m_modifiers)
+	{
+		mod->reset();
+		delete mod;
+	}
+	m_modifiers.clear();
 }
 
 const std::string &why::GameObjectBase::get_name() const
@@ -106,7 +121,7 @@ float why::StaticObject::get_width() const
 
 clan::Sizef why::StaticObject::get_size() const
 {
-	return m_rect.get_size();
+	return get_rect().get_size();
 }
 
 clan::Rectf why::StaticObject::get_rect() const
@@ -116,7 +131,7 @@ clan::Rectf why::StaticObject::get_rect() const
 
 clan::Pointf why::StaticObject::get_position() const
 {
-	return clan::Pointf(m_rect.left, m_rect.bottom);
+	return clan::Pointf(get_rect().left, get_rect().bottom);
 }
 
 void why::StaticObject::set_sprite_position(clan::Pointf pos)
@@ -144,6 +159,11 @@ clan::Angle why::StaticObject::get_rotation() const
 clan::Sprite why::StaticObject::get_sprite() const
 {
 	return m_sprite;
+}
+
+void why::StaticObject::set_scale (float x, float y)
+{
+	m_sprite.set_scale(x, y);
 }
 
 //////////////////////////////////////////////

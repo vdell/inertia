@@ -4,6 +4,7 @@
 #include "why_purgatory.hpp"
 #include "why_utilities.hpp"
 #include "why_bubble_object.hpp"
+#include "why_game_object_modifier.hpp"
 
 //////////////////////////////////////////////////
 // World
@@ -41,7 +42,13 @@ why::World::~World()
 	delete m_level;
 	for (auto o : m_objects)
 	{
-		if (o) delete o;
+		if (o)
+		{
+			// The modifiers would be deleted automatically by the game object base destructor but this has
+			// the potential for a crash if the modifier tries to dynamic cast the object inside ModifierXXX::reset().
+			o->delete_modifiers();
+			delete o;
+		}
 	}
 }
 
@@ -86,6 +93,8 @@ void why::World::initialize()
 	m_paddle = new PaddleObject(-1, m_canvas, m_rc_manager->get_sprite(ResourceId::PlayerPaddle), 
 		m_pworld.get_pc(), m_settings);
 	add_object(m_paddle);
+
+	m_paddle->add_modifier(new WidthModifier(*m_paddle, 1.5f));
 
 	slot_mouse_move = m_parent->get_ic().get_mouse().sig_pointer_move().connect(this, &World::on_mouse_move);
 	slot_mouse_click = m_parent->get_ic().get_mouse().sig_key_up().connect(this, &World::on_mouse_click);
@@ -335,11 +344,21 @@ void why::World::update(float fixed_timestep, clan::ubyte64 time_elapsed_ms, int
 			reset_positions();
 			m_level->pause();
 		}
+
+		for (auto &object : m_objects)
+		{
+			object->delete_modifiers();
+		}
 	}
 	else if (m_level->is_completed())
 	{
 		GameState::set(GameStateValue::LevelCompleted);
 		kill_bubbles(true);
+
+		for (auto &object : m_objects)
+		{
+			object->delete_modifiers();
+		}
 	}
 	else
 	{

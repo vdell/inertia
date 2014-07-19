@@ -8,6 +8,8 @@ namespace why
 	//! Forward declaration
 	class Level;
 
+	class GameObjectModifierBase;
+
 	long get_unique_object_id();
 
 	//! An abstract base class for all game objects.
@@ -29,7 +31,11 @@ namespace why
 
 		virtual void draw(clan::Canvas &c) = 0;
 		virtual void update(clan::ubyte64 time_elapsed_ms);
+
+		virtual void add_modifier(GameObjectModifierBase *mod);
+		virtual void delete_modifiers();
 	protected:
+		std::deque < GameObjectModifierBase * > m_modifiers;
 		std::string m_name;
 		long m_id;
 	};
@@ -64,6 +70,8 @@ namespace why
 		clan::Sprite get_sprite() const;
 
 		clan::Pointf get_sprite_position() const;
+
+		void set_scale(float x, float y);
 	
 		void set_sprite_position(clan::Pointf pos);
 	protected:

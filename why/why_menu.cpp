@@ -73,7 +73,7 @@ why::Menu::~Menu()
 void why::Menu::show(unsigned int id, bool value)
 {
 	auto &i = get_item(id);
-	assert(!i.is_invalid());
+	assert(i.is_valid());
 	if (i.is_shown() != value)
 	{
 		i.show(value);
