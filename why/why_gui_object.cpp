@@ -106,3 +106,8 @@ void why::GuiObject::set_name(const std::string &name)
 {
 	m_name = name;
 }
+
+bool why::GuiObject::is_valid() const
+{
+	return m_parent && m_id != -1;
+}

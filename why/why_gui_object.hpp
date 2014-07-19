@@ -48,6 +48,9 @@ namespace why
 		//! Returns true if the object is shown, false otherwise
 		bool is_shown() const;
 
+		//! Returns true if the object is valid (i.e. has valid parent and ID) or false otherwise.
+		bool is_valid() const;
+
 		//! Sets the position of the object
 		void set_position(clan::Pointf pos);
 

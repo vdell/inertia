@@ -44,11 +44,6 @@ void why::MenuItem::draw(clan::Canvas &c)
 	//c.draw_box(m_rect, clan::Colorf::white);
 }
 
-bool why::MenuItem::is_invalid() const
-{
-	return m_id == -1;
-}
-
 ////////////////////////////////////////////////////
 // Menu
 ////////////////////////////////////////////////////
@@ -152,7 +147,7 @@ why::Menu &why::Menu::operator<<(const MenuItem &item)
 bool why::Menu::add_item(const MenuItem &item)
 {
 	// Make sure IDs are unique
-	if (!get_item(item.get_id()).is_invalid())
+	if (get_item(item.get_id()).is_valid())
 	{
 		return false;
 	}

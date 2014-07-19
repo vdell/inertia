@@ -519,7 +519,7 @@ void why::Application::on_menu_mouse_clicked(const clan::InputEvent &e)
 	const MenuItem &si = m_main_menu->get_selection();
 
 	// No selection?
-	if (si.is_invalid())
+	if (!si.is_valid())
 	{
 		return;
 	}

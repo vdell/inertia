@@ -5,12 +5,13 @@
 
 namespace why
 {
+	//! Forward declaration
 	class Menu;
 
 	/*! @brief Menu item class
 	 *
-	 * @detail Contains information about a single menu item. The items are positioned 
-	 *         by the parent menu.
+	 * @detail Contains information about a single menu item. The items are 
+	 *         positioned by the parent menu.
 	 */
 	class MenuItem : public GuiObject
 	{
@@ -44,9 +45,6 @@ namespace why
 		 * @param text The new text
 		 **/
 		void set_text(const std::string &text);
-
-		//! Returns true if the item is invalid (id == -1) or false otherwise.
-		bool is_invalid() const;
 	private:
 		std::string m_text;
 	};
