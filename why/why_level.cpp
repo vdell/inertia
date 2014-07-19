@@ -639,11 +639,7 @@ bool why::Level::is_destroyable(const GameObjectBase *gob) const
 	if (dynamic_cast <const SpacerObject *>(bob)) return false;
 
 	const DestroyableObject *desto = dynamic_cast <const DestroyableObject*>(bob);
-	if (desto)
-	{
-		return desto->is_destruction_enabled();
-	}
-	return false;
+	return desto && desto->is_destruction_enabled();
 }
 
 void why::Level::start_timer()
