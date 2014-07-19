@@ -2,22 +2,6 @@
 
 namespace why
 {
-	class GuiException : public std::exception
-	{
-	public:
-		GuiException(const std::string &e_msg) : m_emsg(e_msg)
-		{
-
-		}
-		virtual const char *what() const
-		{
-			return m_emsg.c_str();
-		}
-	private:
-		std::string m_emsg;
-	};
-
-
 	//! Abstract base class for all GUI items.
 	class GuiObject
 	{
