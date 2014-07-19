@@ -18,12 +18,12 @@ namespace why
 	public:
 		/*! @brief Constructor
 		 * 
-		 * @param parent The parent window
+		 * @param parent The parent menu
 		 * @param f The font in which the item will be drawn
 		 * @param id Unique ID for the menu item.
 		 * @param text Items' text (i.e. label)
 		 **/
-		MenuItem(clan::DisplayWindow &parent, clan::Font f, unsigned int id, const std::string &text);
+		MenuItem(Menu &parent, clan::Font f, unsigned int id, const std::string &text);
 		
 		/*! @brief Constructor 
 		 *
@@ -49,14 +49,29 @@ namespace why
 		std::string m_text;
 	};
 
-
 	typedef std::deque <MenuItem> MenuItemDeque;
 
+	/*! @brief A class for showing a menu
+	 *
+	 * @detail The class is currently used for showing the main menu and it doesn't support
+	 *         any fancy features like popup menus etc.
+	 **/
 	class Menu : public GuiObject
 	{
 	public:
+		/*! @brief Constructor
+		 *
+		 * @param parent The parent window
+		 * @param f Font for drawing menu items
+		 * @param sprite Menu sprite
+		 * @param pos Menu position
+		 * @param id Menu ID
+		 * @param name Object name (can be empty)
+		 **/
 		Menu(clan::DisplayWindow &parent, clan::Font f, clan::Sprite sprite,
 			clan::Pointf pos = clan::Pointf(), int id = -1, const std::string &name = "menu");
+
+		//! Destructor
 		virtual ~Menu();
 
 		bool add_item(const MenuItem &item);

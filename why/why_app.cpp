@@ -219,14 +219,15 @@ void why::Application::create_main_menu()
 	Font f(m_rc_manager->get_font(50));
 	const unsigned int id(static_cast<unsigned int>(ResourceId::MainMenu));
 	
-	m_main_menu = new Menu(window, f, sprite, Pointf(100.0, 250.0f), id, "Main Menu");
+	m_main_menu = new Menu(window, f, sprite, Pointf(100.0, 250.0f), id, "main_menu");
 
-	*m_main_menu << MenuItem(window, f, mid::ResumeGame, "Resume")
-		<< MenuItem(window, f, mid::NewGame, "New Game")
-		<< MenuItem(window, f, mid::LoadGame, "Load Game")
-		<< MenuItem(window, f, mid::Settings, "Settings")
-		<< MenuItem(window, f, mid::Credits, "Credits")
-		<< MenuItem(window, f, mid::Quit, "Quit");
+	*m_main_menu 
+		<< MenuItem(*m_main_menu, f, mid::ResumeGame, "Resume")
+		<< MenuItem(*m_main_menu, f, mid::NewGame, "New Game")
+		<< MenuItem(*m_main_menu, f, mid::LoadGame, "Load Game")
+		<< MenuItem(*m_main_menu, f, mid::Settings, "Settings")
+		<< MenuItem(*m_main_menu, f, mid::Credits, "Credits")
+		<< MenuItem(*m_main_menu, f, mid::Quit, "Quit");
 
 	m_main_menu->show(MenuItemId::ResumeGame, false);
 }

@@ -5,8 +5,8 @@
 // MenuItem
 ////////////////////////////////////////////////////
 
-why::MenuItem::MenuItem(clan::DisplayWindow &parent, clan::Font f, unsigned int id, const std::string &text) 
-	: GuiObject(parent, f, clan::Sizef(), clan::Pointf(), id, "menu_item"), m_text(text)
+why::MenuItem::MenuItem(Menu &parent, clan::Font f, unsigned int id, const std::string &text) 
+	: GuiObject(parent.get_parent(), f, clan::Sizef(), clan::Pointf(), id, "menu_item"), m_text(text)
 {
 
 }
