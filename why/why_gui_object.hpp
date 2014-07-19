@@ -13,7 +13,7 @@ namespace why
 		 * @param size Size of this object
 		 * @param pos Position for this object
 		 * @param id Unique ID for this object
-		 * @param name Name for this object
+		 * @param name Name for this object (can be empty)
 		 **/
 		GuiObject(clan::DisplayWindow &parent, clan::Font font,
 			clan::Sizef size = clan::Sizef(), clan::Pointf pos = clan::Pointf(), int id = -1, 
