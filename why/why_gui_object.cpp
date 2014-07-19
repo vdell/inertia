@@ -72,6 +72,12 @@ clan::Font why::GuiObject::get_font()
 	return m_font;
 }
 
+clan::DisplayWindow &why::GuiObject::get_parent()
+{
+	assert(is_valid());
+	return *m_parent;
+}
+
 void why::GuiObject::set_font(clan::Font f)
 {
 	m_font = f;
@@ -109,5 +115,5 @@ void why::GuiObject::set_name(const std::string &name)
 
 bool why::GuiObject::is_valid() const
 {
-	return m_parent && m_id != -1;
+	return m_parent;
 }

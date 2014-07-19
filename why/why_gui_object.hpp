@@ -37,6 +37,8 @@ namespace why
 		//! Returns the font of the object
 		clan::Font get_font();
 
+		clan::DisplayWindow &get_parent();
+
 		//! Sets the font for the object
 		void set_font(clan::Font f);
 
