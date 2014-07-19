@@ -74,11 +74,20 @@ namespace why
 		//! Destructor
 		virtual ~Menu();
 
+		/*! @brief Adds a menu item 
+		 *
+		 * @param item The item to be added
+		 * @return true if the item was added or false otherwise (ID not unique). 
+		 **/
 		bool add_item(const MenuItem &item);
+
+		//! Returns menu item with the given ID or an invalid item if not found.
 		const MenuItem &get_item(unsigned int id) const;
 
+		//! Returns the selected menu item or an invalid item if no selection is active.
 		const MenuItem &get_selection() const;
 
+		//! Shows or hides the menu item with the given ID
 		void show(unsigned int id, bool value = true);
 
 		void draw(clan::Canvas &c);
@@ -86,6 +95,7 @@ namespace why
 		void on_mouse_move(const clan::InputEvent &e);
 		void on_mouse_click(const clan::InputEvent &e);
 
+		//! @see Menu::add_item
 		Menu &operator << (const MenuItem &item);
 	private:
 		MenuItem &get_item(unsigned int id);

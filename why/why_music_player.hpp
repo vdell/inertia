@@ -6,22 +6,40 @@
 
 namespace why
 {
+	//! Class for playing music during game play.
 	class MusicPlayer
 	{
 	public:
+		/* @brief Constructor 
+		 *
+		 * @param sm Reference to the settings manager
+		 **/
 		MusicPlayer(const SettingsManager &sm);
+		
+		//! Destructor
 		~MusicPlayer();
+
+		//! Starts playback
 		void play();
+
+		//! Stops playback
 		void stop();
+
+		//! Advance to next song
 		void next();
+
+		//! Go back to the previous song
 		void previous();
 
+		//! Restarts the current song
 		void restart_current();
 
+		//! Shuffles the playlist
 		void shuffle();
 
 		void update();
 
+		//! Set the soundtrack
 		void set_soundtrack(const Soundtrack &st);
 	private:
 		bool m_manually_stopped;
