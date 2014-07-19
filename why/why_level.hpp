@@ -7,16 +7,33 @@
 
 namespace why
 {
+	//! Enum class of valid row alignment values
 	enum class RowAligment
 	{
 		Left, Center, Right
 	};
 
+	//! Structure for a single row of blocks in a level
 	struct Row
 	{
 	public:
+		//! Constructor
 		Row();
+
+		/*! @brief Constructor
+		 *
+		 * @param idx Row index
+		 * @param aligment The row alignment
+		 * @param empty Is this an empty row (i.e. a spacer)?
+		 **/
 		Row(unsigned int idx, RowAligment aligment, bool empty);
+		
+		/*! @brief Constructor
+		 *
+		 * @param idx The row index
+		 * 
+		 * @detail Used when searching for rows 
+		 **/
 		explicit Row(unsigned int idx);
 
 		unsigned int m_index;
@@ -24,6 +41,7 @@ namespace why
 		bool m_empty;
 	};
 
+	//! Row compare functor
 	struct RowCompare
 	{
 		bool operator() (const Row &lhs, const Row rhs)
@@ -159,8 +177,8 @@ namespace why
 
 	/* @brief Level loader class 
 	 *
-	 * @detail This class is used to load level information from the JSON-based level-files. It works by directly
-	 *         modifying the given Level-instance
+	 * @detail This class is used to load level information from the JSON-based level-files. It works 
+	 *         by directly modifying the given Level-instance
 	 **/
 	class LevelLoader
 	{
