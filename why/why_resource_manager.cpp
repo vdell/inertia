@@ -34,6 +34,7 @@ void why::ResourceManager::load(const std::string &resources_path)
 void why::ResourceManager::load_sprites(const std::string &resources_path)
 {
 	using namespace clan;
+	using namespace std;
 
 	WHY_LOG() << "Loading sprites...";
 
@@ -43,55 +44,54 @@ void why::ResourceManager::load_sprites(const std::string &resources_path)
 	}
 	assert(m_parent);
 
-	typedef SpriteType st;
 	typedef ResourceId rid;
 	typedef SpriteMetaData smd;
 
 	Canvas c = Canvas(*m_parent);
 
-	std::string sprites_path(resources_path + m_sm.get_as_str("game.paths.art", "art/png"));
+	string sprites_path(resources_path + m_sm.get_as_str("game.paths.art", "art/png"));
 
-	std::string path = sprites_path + "player_ball_default.png";
-	m_sprites[smd(st::Other, rid::PlayerBall, path)] = Sprite(c, path);
+	string path = sprites_path + "player_ball_default.png";
+	m_sprites[smd(rid::PlayerBall, path)] = Sprite(c, path);
 
 	path = sprites_path + "red_block_default.png";
-	m_sprites[smd(st::Block, rid::BlockRed, path)] = Sprite(c, path);
+	m_sprites[smd(rid::BlockRed, path)] = Sprite(c, path);
 
 	path = sprites_path + "blue_block_default.png";
-	m_sprites[smd(st::Block, rid::BlockBlue, path)] = Sprite(c, path);
+	m_sprites[smd(rid::BlockBlue, path)] = Sprite(c, path);
 
 	path = sprites_path + "green_block_default.png";
-	m_sprites[smd(st::Block, rid::BlockGreen, path)] = Sprite(c, path);
+	m_sprites[smd(rid::BlockGreen, path)] = Sprite(c, path);
 
 	path = sprites_path + "yellow_block_default.png";
-	m_sprites[smd(st::Block, rid::BlockYellow, path)] = Sprite(c, path);
+	m_sprites[smd(rid::BlockYellow, path)] = Sprite(c, path);
 
 	path = sprites_path + "grey_block_default.png";
-	m_sprites[smd(st::Block, rid::BlockGrey, path)] = Sprite(c, path);
+	m_sprites[smd(rid::BlockGrey, path)] = Sprite(c, path);
 
 	path = sprites_path + "purple_block_default.png";
-	m_sprites[smd(st::Block, rid::BlockPurple, path)] = Sprite(c, path);
+	m_sprites[smd(rid::BlockPurple, path)] = Sprite(c, path);
 
 	path = sprites_path + "brown_block_default.png";
-	m_sprites[smd(st::Block, rid::BlockBrown, path)] = Sprite(c, path);
+	m_sprites[smd(rid::BlockBrown, path)] = Sprite(c, path);
 
 	path = sprites_path + "spacer_block_80x27.png";
-	m_sprites[smd(st::Block, rid::BlockTransparent, path)] = Sprite(c, path);
+	m_sprites[smd(rid::BlockTransparent, path)] = Sprite(c, path);
 
 	path = sprites_path + "paddle_default.png";
-	m_sprites[smd(st::Other, rid::PlayerPaddle, path)] = Sprite(c, path);
+	m_sprites[smd(rid::PlayerPaddle, path)] = Sprite(c, path);
 
 	path = sprites_path + "background.png";
-	m_sprites[smd(st::Other, rid::BackgroundGame, path)] = Sprite(c, path);
+	m_sprites[smd(rid::BackgroundGame, path)] = Sprite(c, path);
 
 	path = sprites_path + "background_nogui.png";
-	m_sprites[smd(st::Other, rid::BackgroundMenu, path)] = Sprite(c, path);
+	m_sprites[smd(rid::BackgroundMenu, path)] = Sprite(c, path);
 
 	path = sprites_path + "main_menu.png";
-	m_sprites[smd(st::Other, rid::MainMenuBackground, path)] = Sprite(c, path);
+	m_sprites[smd(rid::MainMenuBackground, path)] = Sprite(c, path);
 
 	path = sprites_path + "bubble.png";
-	m_sprites[smd(st::Other, rid::Bubble, path)] = Sprite(c, path);
+	m_sprites[smd(rid::Bubble, path)] = Sprite(c, path);
 
 	WHY_LOG() << m_sprites.size() << " sprite(s) loaded";
 }
