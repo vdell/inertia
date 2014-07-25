@@ -296,6 +296,7 @@ unsigned int why::DestroyableObject::hit(unsigned int damage)
 
 bool why::DestroyableObject::is_dead() const
 {
+	if (!m_destruction_enabled) return false;
 	return m_health == 0;
 }
 
