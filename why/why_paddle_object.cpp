@@ -15,19 +15,10 @@ why::PaddleObject::PaddleObject(long id, clan::Canvas *canvas, clan::Sprite spri
 	using namespace clan;
 	set_as_box(get_width() / 2.0f, get_height() / 2.0f);
 
-	BodyDescription bd(pc);
-	bd.set_type(BodyType::body_kinematic);
-	bd.set_gravity_scale(0.0f);
-
-	m_body = clan::Body(pc, bd);
+	m_body = clan::Body(pc, body_description(pc));
 	m_body.set_data(this);
 
-	FixtureDescription fd(pc);
-
-	fd.set_density(sm.get_as_float("game.physics.paddle_density", 1.0f));
-	fd.set_friction(sm.get_as_float("game.physics.paddle_friction", 0.0f));
-	fd.set_restitution(sm.get_as_float("game.physics.paddle_restitution", 1.0f));
-
+	clan::FixtureDescription fd(fixture_description(pc));
 	fd.set_shape(*this);
 	m_fixture = Fixture(pc, m_body, fd);
 }
@@ -59,3 +50,11 @@ void why::PaddleObject::update(clan::ubyte64 time_elapsed_ms)
 
 }
 
+clan::BodyDescription why::PaddleObject::body_description(clan::PhysicsContext &pc) const
+{
+	clan::BodyDescription bd(pc);
+	bd.set_type(clan::BodyType::body_kinematic);
+	bd.set_gravity_scale(0.0f);
+	bd.allow_sleep(true);
+	return bd;
+}

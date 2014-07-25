@@ -30,5 +30,6 @@ namespace why
 		virtual void reset();
 	private:
 		float m_scale_x;
+		float m_orig_body_width;
 	};
 }

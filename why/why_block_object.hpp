@@ -42,8 +42,6 @@ namespace why
 		virtual float margin_bottom() const;
 
 		bool is_positioned();
-
-		void set_destryable(bool value = true);
 	protected:
 		bool m_is_positioned;
 		static const float m_default_margin_x;
@@ -55,7 +53,7 @@ namespace why
 	class SpacerObject : public GameObjectBase, public BlockObjectBase
 	{
 	public:
-		SpacerObject(clan::Size s, const std::string &name = "spacer object");
+		SpacerObject(clan::Size s, const std::string &name = "spacer_object");
 		virtual ~SpacerObject();
 
 		SpacerObject(const SpacerObject &cpy);
@@ -63,9 +61,14 @@ namespace why
 		float get_width() const;
 		float get_height() const;
 
+		virtual clan::FixtureDescription fixture_description(clan::PhysicsContext &pc) const;
+		virtual clan::BodyDescription body_description(clan::PhysicsContext &pc) const;
+
 		void draw(clan::Canvas &c);
 	private:
 		clan::Size m_size;
+
+		friend class Level;
 
 	};
 
@@ -77,7 +80,7 @@ namespace why
 	{
 	public:
 		BlockObject(long id, clan::Canvas *canvas, clan::Sprite sprite, unsigned int health,
-			clan::PhysicsContext &pc, const SettingsManager &sm, const std::string &name = "block object",
+			clan::PhysicsContext &pc, const SettingsManager &sm, const std::string &name = "block_object",
 			BlockPosition pos = BlockPosition::Auto, const BlockObject *pos_parent = nullptr);
 		virtual ~BlockObject();
 
@@ -86,6 +89,8 @@ namespace why
 		virtual void on_collision_begin(clan::Body &b);
 		virtual void on_collision_end(clan::Body &b);
 		virtual bool should_collide_with(clan::Body &b);
+
+		virtual clan::BodyDescription body_description(clan::PhysicsContext &pc) const;
 
 		virtual unsigned int hit(unsigned int damage, const MovingObject *hitter);
 	private:

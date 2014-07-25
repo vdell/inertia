@@ -94,7 +94,7 @@ void why::World::initialize()
 		m_pworld.get_pc(), m_settings);
 	add_object(m_paddle);
 
-	m_paddle->add_modifier(new WidthModifier(*m_paddle, 1.5f));
+	//m_paddle->add_modifier(new WidthModifier(*m_paddle, 1.5f));
 
 	slot_mouse_move = m_parent->get_ic().get_mouse().sig_pointer_move().connect(this, &World::on_mouse_move);
 	slot_mouse_click = m_parent->get_ic().get_mouse().sig_key_up().connect(this, &World::on_mouse_click);

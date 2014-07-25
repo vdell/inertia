@@ -20,11 +20,12 @@ namespace why
 
 		void draw(clan::Canvas &c);
 
+		virtual clan::BodyDescription body_description(clan::PhysicsContext &pc) const;
+
 		bool has_collided_with_paddle() const;
 	private:
 		clan::Vec2f m_force;
 		boost::timer::cpu_timer m_timer;
-		bool m_direction_left;
 		bool m_has_collided_with_paddle;
 	
 	};

@@ -1,6 +1,6 @@
 {
     "debug": {
-        "enable_box2d_debug_draw": true,
+        "enable_box2d_debug_draw": false,
         "log_file": "why.log"
     },
     "game": {

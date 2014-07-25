@@ -19,6 +19,8 @@ namespace why
 
 		virtual void update(clan::ubyte64 time_elapsed_ms);
 
+		virtual clan::BodyDescription body_description(clan::PhysicsContext &pc) const;
+
 		virtual void on_collision_begin(clan::Body &b);
 		virtual void on_collision_end(clan::Body &b);
 		virtual bool should_collide_with(clan::Body &b);

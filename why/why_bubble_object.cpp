@@ -4,27 +4,23 @@
 
 why::BubbleObject::BubbleObject(long id, clan::Canvas *canvas, clan::Sprite sprite,
 	clan::PhysicsContext &pc, const SettingsManager &sm, const std::string &name) :
-	MovingObject(id, canvas, sprite, pc, name), clan::CircleShape(pc), m_has_collided_with_paddle(false)
+	MovingObject(id, canvas, sprite, pc, name), clan::CircleShape(pc), 
+	m_has_collided_with_paddle(false)
 {
 	using namespace clan;
 
-	BodyDescription bd(pc);
-	bd.set_type(BodyType::body_dynamic);
-	bd.set_gravity_scale(0.0f);
-	bd.allow_sleep(false);
+	m_body = Body(pc, body_description(pc));
 
-	m_body = Body(pc, bd);
+	// For some reason the body type is set to static (by ClanLib) even though 
+	// body_description() returns BodyType::body_dynamic. 
+	m_body.set_type(BodyType::body_dynamic);
+	m_body.set_gravity_scale(0.0f);
 	m_body.set_data(this);
 
-	FixtureDescription fd(pc);
-	fd.set_density(1.0f);
-	fd.set_friction(0.0f);
-	fd.set_restitution(1.0f);
+	clan::FixtureDescription fd(fixture_description(pc));
 	fd.set_shape(*this);
-
 	m_fixture = Fixture(pc, m_body, fd);
-	m_body.reset_mass_data();
-	set_radius((float(get_width() / 2.0f)));
+	set_radius(static_cast<float>(get_width() / 2.0f));
 
 	m_timer.start();
 	m_force = Vec2f(0.0f, 1.0f);
@@ -37,7 +33,9 @@ why::BubbleObject::~BubbleObject()
 
 why::BubbleObject::BubbleObject(const BubbleObject &cpy) : MovingObject(cpy), clan::CircleShape(cpy)
 {
-
+	m_has_collided_with_paddle = cpy.m_has_collided_with_paddle;
+	m_force = cpy.m_force;
+	m_timer = cpy.m_timer;
 }
 
 void why::BubbleObject::on_collision_begin(clan::Body &b)
@@ -77,4 +75,13 @@ void why::BubbleObject::draw(clan::Canvas &c)
 bool why::BubbleObject::has_collided_with_paddle() const
 {
 	return m_has_collided_with_paddle;
+}
+
+clan::BodyDescription why::BubbleObject::body_description(clan::PhysicsContext &pc) const
+{
+	clan::BodyDescription bd(pc);
+	bd.set_type(clan::BodyType::body_dynamic);
+	bd.set_gravity_scale(0.0f);
+	bd.allow_sleep(false);
+	return pc;
 }

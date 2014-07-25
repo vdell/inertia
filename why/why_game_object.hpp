@@ -107,6 +107,9 @@ namespace why
 		clan::Body &body();
 		const clan::Body &body() const;
 
+		virtual clan::FixtureDescription fixture_description(clan::PhysicsContext &pc) const;
+		virtual clan::BodyDescription body_description(clan::PhysicsContext &pc) const = 0;
+
 		void align_sprite_with_body();
 	protected:
 		bool m_collisions_enabled;

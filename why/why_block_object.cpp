@@ -58,7 +58,6 @@ why::BlockObject::BlockObject(long id, clan::Canvas *canvas, clan::Sprite sprite
 	{
 		assert(m_pos_parent_item);
 	}
-	using namespace clan;
 
 	// There is some margin between blocks but the margin is there just for the looks. By increasing 
 	// the size of the body the ball should not go between the blocks. 
@@ -67,18 +66,12 @@ why::BlockObject::BlockObject(long id, clan::Canvas *canvas, clan::Sprite sprite
 
 	set_as_box((get_width() + extra_size) / 2.0f, (extra_size + get_height()) / 2.0f);
 
-	BodyDescription bd(pc);
-	bd.set_type(BodyType::body_static);
-
-	m_body = Body(pc, bd);
+	m_body = clan::Body(pc, body_description(pc));
 	m_body.set_data(this);
 
-	FixtureDescription fd(pc);
-	fd.set_density(sm.get_as_float("game.physics.block_density", 1.0f));
-	fd.set_friction(sm.get_as_float("game.physics.block_friction", 0.0f));
-	fd.set_restitution(sm.get_as_float("game.physics.block_restitution", 1.0f));
+	clan::FixtureDescription fd(fixture_description(pc));
 	fd.set_shape(*this);
-	m_fixture = Fixture(pc, m_body, fd);
+	m_fixture = clan::Fixture(pc, m_body, fd);
 }
 
 why::BlockObject::~BlockObject()
@@ -89,6 +82,8 @@ why::BlockObject::~BlockObject()
 why::BlockObject::BlockObject(const BlockObject &cpy) : DestroyableObject(cpy),
 clan::PolygonShape(cpy), BlockObjectBase(cpy)
 {
+	m_pos = cpy.m_pos;
+	m_pos_parent_item = cpy.m_pos_parent_item;
 }
 
 void why::BlockObject::on_collision_begin(clan::Body &b)
@@ -140,6 +135,14 @@ unsigned int why::BlockObject::hit(unsigned int damage, const MovingObject *hitt
 	return health;
 }
 
+clan::BodyDescription why::BlockObject::body_description(clan::PhysicsContext &pc) const
+{
+	clan::BodyDescription bd(pc);
+	bd.set_type(clan::BodyType::body_static);
+	bd.allow_sleep(true);
+	return bd;
+}
+
 //////////////////////////////////////////////
 // SpacerObject
 //////////////////////////////////////////////
@@ -162,15 +165,25 @@ why::SpacerObject::SpacerObject(const SpacerObject &cpy) : GameObjectBase(cpy)
 
 float why::SpacerObject::get_width() const
 {
-	return m_size.width;
+	return static_cast<float>(m_size.width);
 }
 
 float why::SpacerObject::get_height() const
 {
-	return m_size.height;
+	return static_cast<float>(m_size.height);
 }
 
 void why::SpacerObject::draw(clan::Canvas &c)
 {
 
+}
+
+clan::FixtureDescription why::SpacerObject::fixture_description(clan::PhysicsContext &pc) const
+{
+	return clan::FixtureDescription(pc);
+}
+
+clan::BodyDescription why::SpacerObject::body_description(clan::PhysicsContext &pc) const
+{
+	return clan::BodyDescription(pc);
 }

@@ -173,11 +173,6 @@ void why::StaticObject::set_scale (float x, float y)
 why::CollidableObject::CollidableObject(long id, clan::Canvas *canvas, clan::Sprite sprite,
 	clan::PhysicsContext &pc, const std::string &name) : StaticObject(id, sprite, name)
 {
-	using namespace clan;
-	BodyDescription bd(pc);
-	bd.set_type(BodyType::body_static);
-	m_body = Body(pc, bd);
-	m_body.set_data(this);
 	m_collisions_enabled = true;
 }
 
@@ -250,6 +245,15 @@ void why::CollidableObject::align_sprite_with_body()
 	using namespace clan;
 	set_sprite_position(Pointf(get_body_position().x - get_width() / 2,
 		get_body_position().y - get_height() / 2));
+}
+
+clan::FixtureDescription why::CollidableObject::fixture_description(clan::PhysicsContext &pc) const
+{
+	clan::FixtureDescription fd(pc);
+	fd.set_density(1.0f);
+	fd.set_friction(0.0f);
+	fd.set_restitution(1.0f);
+	return fd;
 }
 
 //////////////////////////////////////////////

@@ -11,24 +11,14 @@ why::BallObject::BallObject(long id, clan::Canvas *canvas, clan::Sprite sprite,
 	const std::string &name) : MovingObject(id, canvas, sprite, pc, name),
 	clan::CircleShape(pc)
 {
-	using namespace clan;
-	BodyDescription bd(pc);
-	bd.set_type(BodyType::body_dynamic);
-	bd.set_gravity_scale(0.0f);
-	bd.allow_sleep(true);
-	bd.set_as_bullet(true);
-
-	m_body = Body(pc, bd);
+	m_body = clan::Body(pc, body_description(pc));
 	m_body.set_data(this);
 
-	FixtureDescription fd(pc);
-	fd.set_density(sm.get_as_float("game.physics.ball_density", 1.0f));
-	fd.set_friction(sm.get_as_float("game.physics.ball_friction", 0.0f));
-	fd.set_restitution(sm.get_as_float("game.physics.ball_restitution", 1.0f));
+	clan::FixtureDescription fd(fixture_description(pc));
 	fd.set_shape(*this);
-
-	m_fixture = Fixture(pc, m_body, fd);
-	set_radius((float(get_width() / 2.0f)));
+	m_fixture = clan::Fixture(pc, m_body, fd);
+	
+	set_radius(static_cast<float>(get_width() / 2.0f));
 	set_damage(damage);
 
 	m_block_col_count = 0;
@@ -82,4 +72,14 @@ void why::BallObject::initial_shoot(clan::Vec2f impulse_force)
 void why::BallObject::update(clan::ubyte64 time_elapsed_ms)
 {
 
+}
+
+clan::BodyDescription why::BallObject::body_description(clan::PhysicsContext &pc) const
+{
+	clan::BodyDescription bd(pc);
+	bd.set_type(clan::BodyType::body_dynamic);
+	bd.set_gravity_scale(0.0f);
+	bd.allow_sleep(false);
+	bd.set_as_bullet(true);
+	return bd;
 }
