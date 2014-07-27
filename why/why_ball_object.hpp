@@ -12,7 +12,7 @@ namespace why
 	{
 	public:
 		BallObject(long id, clan::Canvas *canvas, clan::Sprite sprite, clan::PhysicsContext &pc,
-			unsigned int damage, const SettingsManager &sm, const std::string &name = "ball object");
+			unsigned int damage, const SettingsManager &sm, const std::string &name = "ball_object");
 		virtual ~BallObject();
 
 		BallObject(const BallObject &cpy);
