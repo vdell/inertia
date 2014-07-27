@@ -29,7 +29,7 @@ namespace why
 		virtual void apply();
 		virtual void reset();
 	private:
+		bool m_is_reset;
 		float m_scale_x;
-		float m_orig_body_width;
 	};
 }

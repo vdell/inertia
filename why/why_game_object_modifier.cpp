@@ -32,9 +32,8 @@ void why::GameObjectModifierBase::update(clan::ubyte64 time_elapsed_ms)
 
 why::WidthModifier::WidthModifier(CollidableObject &obj, float scale_x,
 	long mod_duration_ms) : GameObjectModifierBase(obj, mod_duration_ms),
-	m_scale_x(scale_x), m_orig_body_width(-1.0f)
+	m_scale_x(scale_x), m_is_reset(false)
 {
-
 }
 
 why::WidthModifier::~WidthModifier()
@@ -51,12 +50,13 @@ void why::WidthModifier::apply()
 	if (ps)
 	{
 		ps->set_as_box(m_obj.get_width() * m_scale_x, m_obj.get_height());
-		
 	}
 }
 
 void why::WidthModifier::reset()
 {
+	if (m_is_reset) return;
+
 	CollidableObject &o = dynamic_cast <CollidableObject &>(m_obj);
 	o.set_scale(1.0f, 1.0f);
 
@@ -65,4 +65,5 @@ void why::WidthModifier::reset()
 	{
 		ps->set_as_box(m_obj.get_width(), m_obj.get_height());
 	}
+	m_is_reset = true;
 }
