@@ -5,7 +5,7 @@ namespace why
 	class GameObjectModifierBase
 	{
 	public:
-		GameObjectModifierBase(GameObjectBase &obj, long mod_duration_ms = -1);
+		GameObjectModifierBase(GameObjectBase &obj, clan::PhysicsContext &pc, long mod_duration_ms = -1);
 
 		virtual ~GameObjectModifierBase();
 
@@ -17,12 +17,13 @@ namespace why
 	protected:
 		long m_mod_duration_ms;
 		GameObjectBase &m_obj;
+		clan::PhysicsContext &m_pc;
 	};
 
 	class WidthModifier : public GameObjectModifierBase
 	{
 	public:
-		WidthModifier(CollidableObject &obj, float scale_x, long mod_duration_ms = -1);
+		WidthModifier(CollidableObject &obj, clan::PhysicsContext &pc, float scale_x, long mod_duration_ms = -1);
 		
 		virtual ~WidthModifier();
 

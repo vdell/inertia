@@ -6,7 +6,8 @@
 //////////////////////////////////////////////////////////
 
 why::GameObjectModifierBase::GameObjectModifierBase(GameObjectBase &obj, 
-	long mod_duration_ms) : m_obj(obj), m_mod_duration_ms(mod_duration_ms)
+	clan::PhysicsContext &pc, long mod_duration_ms) : m_obj(obj), 
+	m_mod_duration_ms(mod_duration_ms), m_pc(pc)
 {
 
 }
@@ -30,8 +31,8 @@ void why::GameObjectModifierBase::update(clan::ubyte64 time_elapsed_ms)
 // WidthModifier
 //////////////////////////////////////////////////////////
 
-why::WidthModifier::WidthModifier(CollidableObject &obj, float scale_x,
-	long mod_duration_ms) : GameObjectModifierBase(obj, mod_duration_ms),
+why::WidthModifier::WidthModifier(CollidableObject &obj, clan::PhysicsContext &pc, float scale_x,
+	long mod_duration_ms) : GameObjectModifierBase(obj, pc, mod_duration_ms),
 	m_scale_x(scale_x), m_is_reset(false)
 {
 }
@@ -43,18 +44,36 @@ why::WidthModifier::~WidthModifier()
 
 void why::WidthModifier::apply()
 {
+	using namespace clan;
+
 	CollidableObject &o = dynamic_cast <CollidableObject &>(m_obj);
 	o.set_scale(m_scale_x, 1.0f);
 
 	clan::PolygonShape *ps = dynamic_cast<clan::PolygonShape *>(&m_obj);
 	if (ps)
 	{
-		ps->set_as_box(m_obj.get_width() * m_scale_x, m_obj.get_height());
+		ps->set_as_box((m_obj.get_width() * m_scale_x)/2, m_obj.get_height()/2);
 	}
+
+	FixtureDescription fd = o.fixture_description(m_pc);
+	fd.set_shape(dynamic_cast<clan::Shape &>(o));
+	BodyDescription bd = o.body_description(m_pc);
+
+	Body b(m_pc, bd);
+	b.set_data(&o);
+	Fixture f(m_pc, b, fd);
+
+	o.body().kill();
+	o.fixture().kill();
+
+	o.body() = b;
+	o.fixture() = f;
 }
 
 void why::WidthModifier::reset()
 {
+	using namespace clan;
+
 	if (m_is_reset) return;
 
 	CollidableObject &o = dynamic_cast <CollidableObject &>(m_obj);
@@ -63,7 +82,22 @@ void why::WidthModifier::reset()
 	clan::PolygonShape *ps = dynamic_cast<clan::PolygonShape *>(&m_obj);
 	if (ps)
 	{
-		ps->set_as_box(m_obj.get_width(), m_obj.get_height());
+		ps->set_as_box(m_obj.get_width()/2, m_obj.get_height()/2);
 	}
+
+	FixtureDescription fd = o.fixture_description(m_pc);
+	fd.set_shape(dynamic_cast<clan::Shape &>(o));
+	BodyDescription bd = o.body_description(m_pc);
+
+	Body b(m_pc, bd);
+	b.set_data(&o);
+	Fixture f(m_pc, b, fd);
+
+	o.body().kill();
+	o.fixture().kill();
+
+	o.body() = b;
+	o.fixture() = f;
+
 	m_is_reset = true;
 }

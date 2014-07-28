@@ -1,4 +1,4 @@
-#include "pch.hpp"
+ #include "pch.hpp"
 #include "why_level.hpp"
 #include "why_purgatory.hpp"
 
@@ -299,7 +299,7 @@ void why::Level::load(const std::string &path, clan::Canvas &c, const ResourceMa
 {
 	reset();
 	LevelLoader(path, *this, c, rcm, pc, sm);
-	assert(!m_objects.empty());
+	set_positions();
 	for (auto row : m_objects)
 	{
 		for (auto obj : row.second)
@@ -364,11 +364,11 @@ void why::Level::reset()
 	m_level_timer.stop();
 }
 
-void why::Level::draw(clan::Canvas &canvas)
+void why::Level::set_positions()
 {
 	using namespace clan;
 
-	if (m_objects.empty())return;
+	if (m_objects.empty()) return;
 
 	Pointf pos;
 	pos.y = m_area.top;
@@ -379,7 +379,7 @@ void why::Level::draw(clan::Canvas &canvas)
 		new_row = true;
 
 		if (o_pair.second.empty()) continue;
-		
+
 		if ((*o_pair.second.begin())->get_width() >= m_area.get_width())
 		{
 			pos.y += (*o_pair.second.begin())->get_height();
@@ -410,11 +410,7 @@ void why::Level::draw(clan::Canvas &canvas)
 
 			auto *block = dynamic_cast<BlockObject*>(o);
 			assert(block);
-			if (block->m_is_positioned)
-			{
-				block->draw(canvas);
-				continue;
-			}
+
 			if (row_width == -1)
 			{
 				row_width = get_row_width(o_pair.first.m_index);
@@ -482,12 +478,50 @@ void why::Level::draw(clan::Canvas &canvas)
 			{
 				pos.x += block->margin_left();
 			}
-			
-			block->set_sprite_position(pos);
-			block->set_body_position(Vec2f(pos.x + width / 2, pos.y + height / 2));
-			block->draw(canvas);
+
+			block->set_position(pos);
 			block->m_is_positioned = true;
 			pos.x += width + block->margin_right();
+		}
+	}
+
+	for (auto &row_it = m_objects.begin(); row_it != m_objects.end();)
+	{
+		GameObjectBasePtrDeque &objects = row_it->second;
+
+		for (auto &obj_it = objects.begin(); obj_it != objects.end();)
+		{
+			if (dynamic_cast<const SpacerObject*>(*obj_it))
+			{
+				delete *obj_it;
+				obj_it = objects.erase(obj_it );
+			}
+			else
+			{
+				++obj_it;
+			}
+		}
+
+		if (row_it->second.empty())
+		{
+			m_objects.erase(row_it++);
+		}
+		else
+		{
+			++row_it;
+		}
+	}
+}
+
+void why::Level::draw(clan::Canvas &canvas)
+{
+	using namespace clan;
+
+	for (auto &o_pair : m_objects)
+	{
+		for (auto o : o_pair.second)
+		{
+			o->draw(canvas);
 		}
 	}
 }
@@ -510,7 +544,7 @@ void why::Level::update(clan::ubyte64 time_elapsed_ms)
 				if (o->is_dead())
 				{
 					// If the block has dropped below game area
-					if (o->get_body_position().y > m_area.bottom)
+					if (o->get_position().y > m_area.bottom)
 					{
 						erased = true;
 						Purgatory::add(o);

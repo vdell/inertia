@@ -94,7 +94,7 @@ void why::World::initialize()
 		m_pworld.get_pc(), m_settings);
 	add_object(m_paddle);
 
-	//m_paddle->add_modifier(new WidthModifier(*m_paddle, 1.5f));
+	
 
 	slot_mouse_move = m_parent->get_ic().get_mouse().sig_pointer_move().connect(this, &World::on_mouse_move);
 	slot_mouse_click = m_parent->get_ic().get_mouse().sig_key_up().connect(this, &World::on_mouse_click);
@@ -294,7 +294,12 @@ void why::World::reset_score()
 bool why::World::is_ball_lost() const
 {
 	assert(is_player_alive());
-	return (m_ball->get_body_position().y > m_area.bottom);
+	if (!m_ball->is_moving())
+	{
+		return false;
+	}
+
+	return (m_ball->get_position().y > m_area.bottom);
 }
 
 void why::World::update(float fixed_timestep, clan::ubyte64 time_elapsed_ms, int max_steps)
@@ -388,8 +393,7 @@ void why::World::spawn_bubble()
 {
 	// The memory is released when the bubble is below the game area or when the level is completed.
 	auto b = new BubbleObject(-1, m_canvas, m_rc_manager->get_sprite(ResourceId::Bubble), m_pworld.get_pc(), m_settings);
-	b->set_body_position(clan::Vec2f(m_area.get_center().x, m_area.top + b->get_height()));
-	b->align_sprite_with_body();
+	b->set_position(clan::Vec2f(m_area.get_center().x, m_area.top + b->get_height()));
 	add_object(b);
 }
 
@@ -462,7 +466,7 @@ void why::World::reset_smooth_states()
 		if (mo)
 		{
 			mo->set_smoothed_position(mo->get_prev_position());
-			mo->set_prev_position(mo->get_body_position());
+			mo->set_prev_position(mo->get_position());
 
 			mo->set_smoothed_angle(mo->get_prev_angle());
 			mo->set_prev_angle(mo->get_rotation().to_radians());
@@ -479,7 +483,7 @@ void why::World::smooth_states()
 		MovingObject *mo = dynamic_cast<MovingObject*>(o);
 		if (mo)
 		{
-			const clan::Vec2f bpos(mo->get_body_position());
+			const clan::Vec2f bpos(mo->get_position());
 
 			mo->set_smoothed_position(m_fixed_timestep_accumulator_ratio * bpos +
 				one_minus_ratio * mo->get_prev_position());
@@ -582,16 +586,16 @@ void why::World::reset_positions()
 	const float paddle_middle_x = paddle_width / 2.0f;
 
 	const float paddle_btm_margin(m_area.get_height() * m_settings.get_as_float("game.core.paddle_btm_margin_perc", 0.05f));
+	
 	const Pointf pp
 		(m_area.get_center().x - paddle_middle_x,
 		((m_area.bottom - (paddle_height + paddle_btm_margin))));
-	p->set_sprite_position(pp);
-	p->set_body_position(Vec2f(pp.x + paddle_middle_x, pp.y + paddle_height / 2.0f));
+	
+	p->set_position(pp);
 	p->set_rotation(Angle(0, AngleUnit::angle_degrees));
 
 	const Pointf bp(pp.x + (paddle_middle_x - (m_ball->get_width() / 2.0f)), pp.y - paddle_height - 1.0f);
-	m_ball->set_sprite_position(bp);
-	m_ball->set_body_position(Vec2f(bp.x + m_ball->get_width() / 2.0f, bp.y + m_ball->get_height() / 2.0f));
+	m_ball->set_position(bp);
 }
 
 clan::Rectf why::World::get_world_area() const
@@ -612,11 +616,18 @@ clan::Rectf why::World::get_world_area() const
 
 void why::World::on_mouse_move(const clan::InputEvent &evt)
 {
+	if (!GameState::is_active(GameStateValue::Playing))
+	{
+		return;
+	}
 	using namespace clan;
 
-	const float paddle_height(m_paddle->get_height());
-	const float paddle_width(m_paddle->get_width());
-	Pointf pp(m_paddle->get_sprite_position());
+	float scale_x = 0.0f, scale_y = 0.0f;
+	m_paddle->get_scale(scale_x, scale_y);
+
+	const float paddle_height(m_paddle->get_height() * scale_y);
+	const float paddle_width(m_paddle->get_width() * scale_x);
+	Pointf pp(m_paddle->get_position());
 
 	const float paddle_middle = paddle_width / 2.0f;
 
@@ -635,14 +646,13 @@ void why::World::on_mouse_move(const clan::InputEvent &evt)
 
 	pp.y = m_area.bottom - (paddle_height + m_area.get_height() * m_paddle_btm_margin);
 
-	m_paddle->set_sprite_position(pp);
-	m_paddle->set_body_position(Vec2f(pp.x + paddle_middle, pp.y + paddle_height / 2.0f));
+	m_paddle->set_position(pp);
 
 	if (!m_ball->is_moving())
 	{
 		const Pointf bp(pp.x + (paddle_middle - m_ball->get_width() / 2.0f), pp.y - paddle_height - 1.0f);
-		m_ball->set_sprite_position(bp);
-		m_ball->set_body_position(Vec2f(bp.x + m_ball->get_width() / 2.0f, bp.y + m_ball->get_height() / 2.0f));
+		m_ball->set_position(bp);
+
 	}
 }
 
@@ -658,7 +668,8 @@ void why::World::on_mouse_click(const clan::InputEvent &evt)
 	{
 		assert(!m_ball->is_moving());
 		m_level->start();
-		m_ball->initial_shoot(clan::Vec2f(0, 5.0f));
+		m_ball->initial_shoot(clan::Vec2f(0, -5.0f));
+		m_paddle->add_modifier(new WidthModifier(*m_paddle, m_pworld.get_pc(), 1.5f));
 	}
 }
 

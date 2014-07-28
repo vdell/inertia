@@ -150,6 +150,7 @@ namespace why
 		//! Resets the combo count to zero.
 		void reset_combo_count();
 	private:
+		void set_positions();
 		float get_row_width(unsigned int idx) const;
 
 		void start_timer();

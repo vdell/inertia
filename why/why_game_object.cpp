@@ -34,6 +34,9 @@ why::GameObjectBase::GameObjectBase(const GameObjectBase &cpy)
 {
 	m_name = cpy.m_name;
 	m_id = cpy.m_id;
+
+	// TODO: Should deep-clone modifiers
+	m_modifiers = cpy.m_modifiers;
 }
 
 void why::GameObjectBase::add_modifier(GameObjectModifierBase *mod)
@@ -104,11 +107,6 @@ void why::StaticObject::draw(clan::Canvas &canvas)
 	m_sprite.draw(canvas, m_rect.left, m_rect.top);
 }
 
-clan::Pointf why::StaticObject::get_sprite_position() const
-{
-	return clan::Pointf(m_rect.left, m_rect.top);
-}
-
 float why::StaticObject::get_height() const
 {
 	return get_size().height;
@@ -134,7 +132,7 @@ clan::Pointf why::StaticObject::get_position() const
 	return clan::Pointf(get_rect().left, get_rect().bottom);
 }
 
-void why::StaticObject::set_sprite_position(clan::Pointf pos)
+void why::StaticObject::set_position(clan::Pointf pos)
 {
 	m_rect = clan::Rectf(pos, get_size());
 }
@@ -166,6 +164,11 @@ void why::StaticObject::set_scale (float x, float y)
 	m_sprite.set_scale(x, y);
 }
 
+void why::StaticObject::get_scale(float &x, float &y) const
+{
+	m_sprite.get_scale(x, y);
+}
+
 //////////////////////////////////////////////
 // CollidableObject
 //////////////////////////////////////////////
@@ -187,6 +190,11 @@ why::CollidableObject::CollidableObject(const CollidableObject &cpy) : StaticObj
 	m_canvas = cpy.m_canvas;
 	m_body = cpy.m_body;
 	m_fixture = cpy.m_fixture;
+}
+
+void why::CollidableObject::draw(clan::Canvas &c)
+{
+	m_sprite.draw(c, m_body.get_position().x - get_width() / 2.0f, m_body.get_position().y - get_height() / 2.0f);
 }
 
 void why::CollidableObject::enable_collision(bool value)
@@ -214,7 +222,7 @@ bool why::CollidableObject::should_collide_with(clan::Body &b)
 	return is_collision_enabled();
 }
 
-clan::Vec2f why::CollidableObject::get_body_position() const
+clan::Pointf why::CollidableObject::get_position() const
 {
 	return m_body.get_position();
 }
@@ -229,9 +237,23 @@ const clan::Body &why::CollidableObject::body() const
 	return m_body;
 }
 
-void why::CollidableObject::set_body_position(clan::Vec2f pos)
+clan::Fixture &why::CollidableObject::fixture()
 {
-	m_body.set_position(pos);
+	return m_fixture;
+}
+
+const clan::Fixture &why::CollidableObject::fixture() const
+{
+	return m_fixture;
+}
+
+void why::CollidableObject::set_position(clan::Pointf pos)
+{
+	
+	clan::Pointf pos_body = pos;
+	pos_body.x += get_width() / 2;
+	pos_body.y += get_height() / 2;
+	m_body.set_position(pos_body);
 }
 
 void why::CollidableObject::set_rotation(clan::Angle a)
@@ -243,8 +265,9 @@ void why::CollidableObject::set_rotation(clan::Angle a)
 void why::CollidableObject::align_sprite_with_body()
 {
 	using namespace clan;
-	set_sprite_position(Pointf(get_body_position().x - get_width() / 2,
-		get_body_position().y - get_height() / 2));
+	
+	StaticObject::set_position(Pointf(m_body.get_position().x - get_width() / 2,
+		m_body.get_position().y - get_height() / 2));
 }
 
 clan::FixtureDescription why::CollidableObject::fixture_description(clan::PhysicsContext &pc) const

@@ -60,8 +60,7 @@ namespace why
 		float get_width() const;
 		float get_height() const;
 
-		clan::Sizef get_size() const;
-		clan::Pointf get_position() const;
+		clan::Sizef get_size() const; 
 		clan::Rectf get_rect() const;
 
 		void set_rotation(clan::Angle a);
@@ -69,11 +68,13 @@ namespace why
 
 		clan::Sprite get_sprite() const;
 
-		clan::Pointf get_sprite_position() const;
+		virtual clan::Pointf get_position() const;
 
 		void set_scale(float x, float y);
-	
-		void set_sprite_position(clan::Pointf pos);
+
+		void get_scale(float &x, float &y) const;
+
+		virtual void set_position(clan::Pointf pos);
 	protected:
 		clan::Sprite m_sprite;
 		clan::Rectf m_rect;
@@ -83,6 +84,11 @@ namespace why
 
 	typedef std::deque < GameObjectBase * > GameObjectBasePtrDeque;
 
+	/*! @brief Class for game objects that can collide
+	 *
+	 * @detail All classes that derive from this class must also derive from clan::PolygonShape
+	 *         or clan::CircleShape
+	 **/
 	class CollidableObject : public StaticObject, public clan::PhysicsObject
 	{
 	public:
@@ -99,13 +105,16 @@ namespace why
 		virtual void on_collision_end(clan::Body &b);
 		virtual bool should_collide_with(clan::Body &b);
 
-		virtual void set_body_position(clan::Vec2f pos);
-		clan::Vec2f get_body_position() const;
+		virtual void set_position(clan::Pointf pos);
+		virtual clan::Pointf get_position() const;
 
 		void set_rotation(clan::Angle a);
 
 		clan::Body &body();
 		const clan::Body &body() const;
+
+		clan::Fixture &fixture();
+		const clan::Fixture &fixture() const;
 
 		/*! @brief Returns fixture description for the object
 		 *
@@ -115,6 +124,8 @@ namespace why
 		virtual clan::BodyDescription body_description(clan::PhysicsContext &pc) const = 0;
 
 		void align_sprite_with_body();
+
+		void draw(clan::Canvas &c);
 	protected:
 		bool m_collisions_enabled;
 		clan::Canvas *m_canvas;
