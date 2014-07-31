@@ -496,7 +496,7 @@ void why::World::smooth_states()
 				one_minus_ratio * mo->get_prev_position());
 			mo->set_prev_position(bpos);
 
-			mo->set_smoothed_angle(m_fixed_timestep_accumulator_ratio * mo->get_rotation().to_degrees() +
+			mo->set_smoothed_angle(m_fixed_timestep_accumulator_ratio * mo->get_rotation().to_radians() +
 				one_minus_ratio * mo->get_prev_angle());
 		}
 	}
