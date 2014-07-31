@@ -118,14 +118,21 @@ void why::World::load_level_index()
 
 	assert(!path.empty());
 	ptree pt;
-	read_json(path, pt);
-	assert(!pt.empty());
 
-	for (auto lnode : boost::adaptors::reverse(pt.get_child("levels")))
+	try
 	{
-		m_level_index.push(lnode.second.data());
-	}
+		read_json(path, pt);
+		assert(!pt.empty());
 
+		for (auto lnode : boost::adaptors::reverse(pt.get_child("levels")))
+		{
+			m_level_index.push(lnode.second.data());
+		}
+	}
+	catch (std::exception &e)
+	{
+		WHY_LOG() << e.what();
+	}
 	WHY_LOG() << m_level_index.size() << " level(s) loaded";
 }
 
