@@ -658,7 +658,7 @@ bool why::Level::is_completed() const
 	{
 		for (auto o : o_pair.second)
 		{
-			if (is_destroyable(o))
+			if (o->is_destroyable())
 			{
 				all_blocks_gone = false;
 				break;
@@ -666,16 +666,6 @@ bool why::Level::is_completed() const
 		}
 	}
 	return all_blocks_gone;
-}
-
-bool why::Level::is_destroyable(const GameObjectBase *gob) const
-{
-	const BlockObjectBase *bob = dynamic_cast<const BlockObjectBase *>(gob);
-	assert(bob);
-	if (dynamic_cast <const SpacerObject *>(bob)) return false;
-
-	const DestroyableObject *desto = dynamic_cast <const DestroyableObject*>(bob);
-	return desto && desto->is_destruction_enabled();
 }
 
 void why::Level::start_timer()

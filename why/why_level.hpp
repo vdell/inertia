@@ -157,8 +157,6 @@ namespace why
 		void stop_timer();
 		void resume_timer();
 
-		bool is_destroyable(const GameObjectBase *gob) const;
-
 		void increase_score();
 
 		static unsigned int m_max_level_time_sec;

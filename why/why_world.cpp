@@ -469,9 +469,9 @@ void why::World::reset_smooth_states()
 {
 	for (auto &o : m_objects)
 	{
-		MovingObject *mo = dynamic_cast<MovingObject*>(o);
-		if (mo)
+		if (o->is_movable())
 		{
+			MovingObject *mo = dynamic_cast<MovingObject*>(o);
 			mo->set_smoothed_position(mo->get_prev_position());
 			mo->set_prev_position(mo->get_position());
 
@@ -487,9 +487,9 @@ void why::World::smooth_states()
 
 	for (auto &o : m_objects)
 	{
-		MovingObject *mo = dynamic_cast<MovingObject*>(o);
-		if (mo)
+		if (o->is_movable())
 		{
+			MovingObject *mo = dynamic_cast<MovingObject*>(o);
 			const clan::Vec2f bpos(mo->get_position());
 
 			mo->set_smoothed_position(m_fixed_timestep_accumulator_ratio * bpos +

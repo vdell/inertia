@@ -75,6 +75,21 @@ void why::GameObjectBase::update(clan::ubyte64 time_elapsed_ms)
 	return;
 }
 
+bool why::GameObjectBase::is_movable() const
+{
+	return false;
+}
+
+bool why::GameObjectBase::is_collidable() const
+{
+	return false;
+}
+
+bool why::GameObjectBase::is_destroyable() const
+{
+	return false;
+}
+
 //////////////////////////////////////////////
 // StaticObject
 //////////////////////////////////////////////
@@ -203,7 +218,7 @@ void why::CollidableObject::enable_collision(bool value)
 	m_fixture.set_as_sensor(!value);
 }
 
-bool why::CollidableObject::is_collision_enabled() const
+bool why::CollidableObject::is_collidable() const
 {
 	return m_collisions_enabled;
 }
@@ -219,7 +234,7 @@ void why::CollidableObject::on_collision_end(clan::Body &b)
 
 bool why::CollidableObject::should_collide_with(clan::Body &b)
 {
-	return is_collision_enabled();
+	return is_collidable();
 }
 
 clan::Pointf why::CollidableObject::get_position() const
@@ -303,7 +318,7 @@ why::DestroyableObject::DestroyableObject(const DestroyableObject &cpy) : Collid
 
 unsigned int why::DestroyableObject::hit(unsigned int damage)
 {
-	if (is_destruction_enabled())
+	if (is_destroyable())
 	{
 		if (damage >= m_health)
 		{
@@ -323,7 +338,7 @@ bool why::DestroyableObject::is_dead() const
 	return m_health == 0;
 }
 
-bool why::DestroyableObject::is_destruction_enabled() const
+bool why::DestroyableObject::is_destroyable() const
 {
 	return m_destruction_enabled;
 }
@@ -414,4 +429,9 @@ float why::MovingObject::get_smoothed_angle() const
 void why::MovingObject::set_smoothed_angle(float angle)
 {
 	m_smoothed_angle = angle;
+}
+
+bool why::MovingObject::is_movable() const
+{
+	return true;
 }

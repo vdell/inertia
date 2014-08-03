@@ -34,6 +34,10 @@ namespace why
 
 		virtual void add_modifier(GameObjectModifierBase *mod);
 		virtual void delete_modifiers();
+
+		virtual bool is_movable() const;
+		virtual bool is_destroyable() const;
+		virtual bool is_collidable() const ;
 	protected:
 		std::deque < GameObjectModifierBase * > m_modifiers;
 		std::string m_name;
@@ -125,6 +129,8 @@ namespace why
 
 		void align_sprite_with_body();
 
+		virtual bool is_collidable() const;
+
 		void draw(clan::Canvas &c);
 	protected:
 		bool m_collisions_enabled;
@@ -147,7 +153,8 @@ namespace why
 		bool is_dead() const;
 
 		void enable_destruction(bool value = true);
-		bool is_destruction_enabled() const;
+		
+		virtual bool is_destroyable() const;
 	private:
 		bool m_destruction_enabled;
 		unsigned int m_health;
@@ -178,6 +185,8 @@ namespace why
 		void set_smoothed_angle(float angle);
 
 		void draw(clan::Canvas &c);
+
+		virtual bool is_movable() const;
 	private:
 		clan::Vec2f m_prev_pos, m_smoothed_pos;
 		float m_prev_angle, m_smoothed_angle;
