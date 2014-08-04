@@ -32,8 +32,6 @@ why::World::World(clan::DisplayWindow &parent, clan::Canvas &c, ResourceManager 
 	m_line_color = clan::Colorf::white;
 	m_line_color.set_alpha(0.3f);
 
-	m_prev_mouse_pos = clan::Point(-1, -1);
-
 	initialize();
 }
 
@@ -472,6 +470,7 @@ void why::World::reset_smooth_states()
 		if (o->is_movable())
 		{
 			MovingObject *mo = dynamic_cast<MovingObject*>(o);
+			assert(mo);
 			mo->set_smoothed_position(mo->get_prev_position());
 			mo->set_prev_position(mo->get_position());
 
@@ -490,6 +489,7 @@ void why::World::smooth_states()
 		if (o->is_movable())
 		{
 			MovingObject *mo = dynamic_cast<MovingObject*>(o);
+			assert(mo);
 			const clan::Vec2f bpos(mo->get_position());
 
 			mo->set_smoothed_position(m_fixed_timestep_accumulator_ratio * bpos +
@@ -509,7 +509,6 @@ unsigned int why::World::kill_ball()
 	--m_player_lives;
 	m_paddle->stop_movement();
 	m_ball->stop_movement();
-	m_prev_mouse_pos = Point(-1, -1);
 	m_ball_linear_velocity = Vec2f(0.0f, 0.0f);
 	return m_player_lives;
 }
@@ -575,7 +574,6 @@ void why::World::spawn_player()
 	assert(!is_player_alive());
 	reset_positions();
 	m_player_lives = m_settings.get_as_int("game.defaults.player_lives", 3);
-	m_prev_mouse_pos = clan::Point(-1, -1);
 }
 
 void why::World::reset_positions()
