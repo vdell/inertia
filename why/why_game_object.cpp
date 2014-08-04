@@ -209,7 +209,10 @@ why::CollidableObject::CollidableObject(const CollidableObject &cpy) : StaticObj
 
 void why::CollidableObject::draw(clan::Canvas &c)
 {
-	m_sprite.draw(c, m_body.get_position().x - get_width() / 2.0f, m_body.get_position().y - get_height() / 2.0f);
+	const clan::Vec2f pos(m_body.get_position());
+	float sx = 0.0f, sy = 0.0f;
+	m_sprite.get_scale(sx, sy);
+	m_sprite.draw(c, pos.x - (get_width() * sx) / 2.0f, pos.y - (get_height() * sy) / 2.0f);
 }
 
 void why::CollidableObject::enable_collision(bool value)
@@ -264,7 +267,6 @@ const clan::Fixture &why::CollidableObject::fixture() const
 
 void why::CollidableObject::set_position(clan::Pointf pos)
 {
-	
 	clan::Pointf pos_body = pos;
 	pos_body.x += get_width() / 2;
 	pos_body.y += get_height() / 2;
@@ -280,9 +282,12 @@ void why::CollidableObject::set_rotation(clan::Angle a)
 void why::CollidableObject::align_sprite_with_body()
 {
 	using namespace clan;
+
+	float sx = 0.0f, sy = 0.0f;
+	m_sprite.get_scale(sx, sy);
 	
-	StaticObject::set_position(Pointf(m_body.get_position().x - get_width() / 2,
-		m_body.get_position().y - get_height() / 2));
+	StaticObject::set_position(Pointf(m_body.get_position().x - (get_width() * sx) / 2,
+		m_body.get_position().y - (get_height() * sy) / 2));
 }
 
 clan::FixtureDescription why::CollidableObject::fixture_description(clan::PhysicsContext &pc) const
