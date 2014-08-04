@@ -216,6 +216,10 @@ namespace why
 
 		typedef std::deque < block_tuple > block_deque;
 
+		/*! @brief Creates an empty row
+		 * 
+		 * @todo Row height should not be hard coded
+		 **/
 		void create_empty_rows(Row r, unsigned int count);
 		void add_row(Row r, unsigned int repeat_row, const block_deque &blocks);
 		void add_block(Row r, unsigned int repeat_block, block_dummy bd);
