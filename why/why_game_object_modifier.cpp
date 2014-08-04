@@ -60,6 +60,7 @@ void why::WidthModifier::apply()
 		FixtureDescription fd = o.fixture_description(m_pc);
 		fd.set_shape(dynamic_cast<clan::Shape &>(o));
 		BodyDescription bd = o.body_description(m_pc);
+		Vec2f pos(o.get_position());
 
 		Body b(m_pc, bd);
 		b.set_data(&o);
@@ -70,6 +71,8 @@ void why::WidthModifier::apply()
 
 		o.body() = b;
 		o.fixture() = f;
+
+		o.set_position(pos);
 	}
 	catch (std::exception &e)
 	{
@@ -102,11 +105,15 @@ void why::WidthModifier::reset()
 		b.set_data(&o);
 		Fixture f(m_pc, b, fd);
 
+		Vec2f pos(o.get_position());
+
 		o.body().kill();
 		o.fixture().kill();
 
 		o.body() = b;
 		o.fixture() = f;
+
+		o.set_position(pos);
 
 		m_is_reset = true;
 	}
