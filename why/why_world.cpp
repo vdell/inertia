@@ -334,8 +334,11 @@ void why::World::update(float fixed_timestep, clan::ubyte64 time_elapsed_ms, int
 		reset_smooth_states();
 		m_pworld.step(fixed_timestep);
 		m_level->update(time_elapsed_ms);
-		m_paddle->update(time_elapsed_ms);
-		m_ball->update(time_elapsed_ms);
+
+		for (auto o : m_objects)
+		{
+			o->update(time_elapsed_ms);
+		}
 	}
 
 	m_pworld.clear_forces();
@@ -655,6 +658,7 @@ void why::World::on_mouse_move(const clan::InputEvent &evt)
 
 	if (!m_ball->is_moving())
 	{
+		// Keep the ball in the middle of the paddle
 		const Pointf bp(pp.x + (paddle_middle - m_ball->get_width() / 2.0f), pp.y - paddle_height - 1.0f);
 		m_ball->set_position(bp);
 

@@ -129,7 +129,6 @@ namespace why
 			m_fixed_timestep_accumulator_ratio;
 
 		int m_paddle_angle_mod;
-		clan::Point m_prev_mouse_pos;
 
 		clan::PhysicsWorld m_pworld;
 
