@@ -19,6 +19,10 @@ namespace why
 		GameObjectBase(long id = -1, const std::string &name = "game_object");
 		virtual ~GameObjectBase();
 
+		/*! @brief Copy constructor
+		 *
+		 * @todo Deep-clone object modifiers
+		 */
 		GameObjectBase(const GameObjectBase &cpy);
 
 		virtual float get_width() const = 0;
