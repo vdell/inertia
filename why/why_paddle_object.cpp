@@ -58,3 +58,8 @@ clan::BodyDescription why::PaddleObject::body_description(clan::PhysicsContext &
 	bd.allow_sleep(true);
 	return bd;
 }
+
+void why::PaddleObject::draw(clan::Canvas &c)
+{
+	CollidableObject::draw(c);
+}

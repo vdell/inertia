@@ -24,5 +24,13 @@ namespace why
 		virtual void on_collision_begin(clan::Body &b);
 		virtual void on_collision_end(clan::Body &b);
 		virtual bool should_collide_with(clan::Body &b);
+
+		/*! @brief Overrides CollidableObject::draw
+		 *
+		 * @bug If the base version is not overridden then the sprites' position is incorrect
+		 *      when WidthModifier is applied to the object. Reason is still unclear as this
+		 *      version does nothing else than calls the base version.
+		 */
+		virtual void draw(clan::Canvas &c);
 	};
 }
