@@ -19,6 +19,8 @@ namespace why
 	 *
 	 * @detail This class represents the application itself. It takes care of the main loop, 
 	 *         (some of the) user input, event handling and such.
+	 * 
+	 * @todo settings.json is currently loaded with a fixed path ("../settings.json")
 	 **/
 	class Application	
 	{
