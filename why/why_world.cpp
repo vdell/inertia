@@ -410,10 +410,17 @@ void why::World::update(float fixed_timestep, clan::ubyte64 time_elapsed_ms, int
 			auto bo = dynamic_cast<BubbleObject*>(object);
 			if (bo && bo->has_collided_with_paddle())
 			{
-
+				add_random_mod_to_paddle();
+				bo->set_has_collided_with_paddle(false);
 			}
 		}
 	}
+}
+
+void why::World::add_random_mod_to_paddle()
+{
+	// Not very random ATM ...
+	m_paddle->add_modifier(new WidthModifier(m_paddle, &m_pworld.get_pc(), 1.5f, 10000));
 }
 
 void why::World::spawn_bubble()
@@ -701,7 +708,6 @@ void why::World::on_mouse_click(const clan::InputEvent &evt)
 		assert(!m_ball->is_moving());
 		m_level->start();
 		m_ball->initial_shoot(clan::Vec2f(0, -5.0f));
-		m_paddle->add_modifier(new WidthModifier(*m_paddle, m_pworld.get_pc(), 1.5f));
 	}
 }
 

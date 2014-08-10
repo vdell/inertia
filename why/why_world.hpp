@@ -96,6 +96,8 @@ namespace why
 		 */
 		void kill_bubbles(bool kill_all = false);
 
+		void add_random_mod_to_paddle();
+
 		GameObjectBasePtrDeque m_objects;
 		void add_object(GameObjectBase *obj);
 
