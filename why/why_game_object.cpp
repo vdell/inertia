@@ -35,8 +35,15 @@ why::GameObjectBase::GameObjectBase(const GameObjectBase &cpy)
 	m_name = cpy.m_name;
 	m_id = cpy.m_id;
 
-	// TODO: Should deep-clone modifiers
 	m_modifiers = cpy.m_modifiers;
+
+	// TODO: Should clone the modifier.
+
+	for (auto mod : m_modifiers)
+	{
+		mod->set_object(this);
+		mod->apply();
+	}
 }
 
 void why::GameObjectBase::add_modifier(GameObjectModifierBase *mod)
@@ -72,7 +79,10 @@ void why::GameObjectBase::set_name(const std::string &name)
 
 void why::GameObjectBase::update(clan::ubyte64 time_elapsed_ms)
 {
-	return;
+	for (auto mod : m_modifiers)
+	{
+		mod->update(time_elapsed_ms);
+	}
 }
 
 bool why::GameObjectBase::is_movable() const
