@@ -203,7 +203,7 @@ void why::Application::create_window()
 {
 	using namespace clan;
 	DisplayWindowDescription window_description;
-	window_description.set_title("WHY");
+	window_description.set_title("Inertia");
 	window_description.set_size(m_resolution, true);
 	window_description.set_fullscreen(m_settings.get_as_bool("game.video.enable_fullscreen", false));
 	window_description.show_caption();
