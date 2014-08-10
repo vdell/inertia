@@ -69,11 +69,6 @@ void why::BallObject::initial_shoot(clan::Vec2f impulse_force)
 	m_body.apply_linear_impulse(impulse_force, m_body.get_world_center());
 }
 
-void why::BallObject::update(clan::ubyte64 time_elapsed_ms)
-{
-
-}
-
 clan::BodyDescription why::BallObject::body_description(clan::PhysicsContext &pc) const
 {
 	clan::BodyDescription bd(pc);

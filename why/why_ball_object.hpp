@@ -27,8 +27,6 @@ namespace why
 		void set_damage(unsigned int dmg);
 
 		virtual clan::BodyDescription body_description(clan::PhysicsContext &pc) const;
-
-		virtual void update(clan::ubyte64 time_elapsed_ms);
 	private:
 		unsigned int m_block_col_count;
 		unsigned int m_damage;

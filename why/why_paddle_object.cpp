@@ -45,11 +45,6 @@ bool why::PaddleObject::should_collide_with(clan::Body &b)
 	return true;
 }
 
-void why::PaddleObject::update(clan::ubyte64 time_elapsed_ms)
-{
-
-}
-
 clan::BodyDescription why::PaddleObject::body_description(clan::PhysicsContext &pc) const
 {
 	clan::BodyDescription bd(pc);

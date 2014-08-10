@@ -17,8 +17,6 @@ namespace why
 
 		PaddleObject(const PaddleObject &cpy);
 
-		virtual void update(clan::ubyte64 time_elapsed_ms);
-
 		virtual clan::BodyDescription body_description(clan::PhysicsContext &pc) const;
 
 		virtual void on_collision_begin(clan::Body &b);
