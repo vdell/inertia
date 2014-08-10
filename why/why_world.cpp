@@ -339,6 +339,18 @@ void why::World::update(float fixed_timestep, clan::ubyte64 time_elapsed_ms, int
 		{
 			o->update(time_elapsed_ms);
 		}
+		for (auto eit = m_active_effects.begin(); eit != m_active_effects.end();)
+		{
+			(*eit)->update(time_elapsed_ms);
+			if ((*eit)->is_ready())
+			{
+				eit = m_active_effects.erase(eit);
+			}
+			else
+			{
+				++eit;
+			}
+		}
 	}
 
 	m_pworld.clear_forces();
@@ -347,6 +359,13 @@ void why::World::update(float fixed_timestep, clan::ubyte64 time_elapsed_ms, int
 		
 	if (is_ball_lost())
 	{
+		// First destroy all modifiers
+
+		for (auto &object : m_objects)
+		{
+			object->delete_modifiers();
+		}
+
 		if (kill_ball() == 0)
 		{
 			kill_bubbles(true);
@@ -356,11 +375,6 @@ void why::World::update(float fixed_timestep, clan::ubyte64 time_elapsed_ms, int
 		{
 			reset_positions();
 			m_level->pause();
-		}
-
-		for (auto &object : m_objects)
-		{
-			object->delete_modifiers();
 		}
 	}
 	else if (m_level->is_completed())
@@ -372,6 +386,11 @@ void why::World::update(float fixed_timestep, clan::ubyte64 time_elapsed_ms, int
 		{
 			object->delete_modifiers();
 		}
+		for (auto &effect : m_active_effects)
+		{
+			delete effect;
+		}
+		m_active_effects.clear();
 	}
 	else
 	{
@@ -513,6 +532,11 @@ unsigned int why::World::kill_ball()
 	m_paddle->stop_movement();
 	m_ball->stop_movement();
 	m_ball_linear_velocity = Vec2f(0.0f, 0.0f);
+
+	const int dfe_duration_ms = 2000;
+
+	m_active_effects.push_back(new DeathFlashEffect(dfe_duration_ms, 1, m_area));
+
 	return m_player_lives;
 }
 
@@ -540,6 +564,11 @@ void why::World::draw(clan::Canvas &canvas)
 			o->draw(canvas);
 		}
 
+		for (auto &e : m_active_effects)
+		{
+			e->draw(canvas);
+		}
+
 #ifdef _DEBUG
 		draw_dbg(canvas);
 #endif
@@ -559,12 +588,6 @@ void why::World::draw_dbg(clan::Canvas &c)
 {
 	using namespace clan;
 	using namespace boost;
-#ifdef _DEBUG
-	Font f(m_rc_manager->get_font());
-
-	const Vec2f ball_lv(m_ball->body().get_linear_velocity());
-	f.draw_text(c, Pointf(m_area.left + 50, m_area.top + 50), str(format("Ball lin. velocity: %1%, %2%") % ball_lv.x % ball_lv.y));
-#endif
 }
 
 unsigned int why::World::get_player_lives() const

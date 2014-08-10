@@ -103,6 +103,7 @@
     <ClCompile Include="why_block_object.cpp" />
     <ClCompile Include="why_bubble_object.cpp" />
     <ClCompile Include="why_console.cpp" />
+    <ClCompile Include="why_effect.cpp" />
     <ClCompile Include="why_game_object.cpp" />
     <ClCompile Include="why_game_object_modifier.cpp" />
     <ClCompile Include="why_game_state.cpp" />
@@ -130,6 +131,7 @@
     <ClInclude Include="why_block_object.hpp" />
     <ClInclude Include="why_bubble_object.hpp" />
     <ClInclude Include="why_console.hpp" />
+    <ClInclude Include="why_effect.hpp" />
     <ClInclude Include="why_game_object_modifier.hpp" />
     <ClInclude Include="why_game_state.hpp" />
     <ClInclude Include="why_gui_object.hpp" />

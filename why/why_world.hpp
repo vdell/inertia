@@ -6,6 +6,7 @@
 #include "why_resource_manager.hpp"
 #include "why_timestep.hpp"
 #include "why_settings_manager.hpp"
+#include "why_effect.hpp"
 
 namespace why
 {
@@ -95,6 +96,11 @@ namespace why
 		 */
 		void kill_bubbles(bool kill_all = false);
 
+		GameObjectBasePtrDeque m_objects;
+		void add_object(GameObjectBase *obj);
+
+		std::deque < EffectBase * > m_active_effects;
+
 		const SettingsManager &m_settings;
 		ResourceManager *m_rc_manager;
 
@@ -104,9 +110,6 @@ namespace why
 
 		BallObject *m_ball;
 		PaddleObject *m_paddle;
-
-		GameObjectBasePtrDeque m_objects;
-		void add_object(GameObjectBase *obj);
 
 		float m_paddle_btm_margin;
 
