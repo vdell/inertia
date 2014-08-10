@@ -40,12 +40,16 @@ why::BubbleObject::BubbleObject(const BubbleObject &cpy) : MovingObject(cpy), cl
 
 void why::BubbleObject::on_collision_begin(clan::Body &b)
 {
-	auto paddle = dynamic_cast<const PaddleObject*>(b.get_data());
-	if (paddle)
+	if (dynamic_cast<const PaddleObject*>(b.get_data()))
 	{
-		m_has_collided_with_paddle = true;
+		set_has_collided_with_paddle(true);
 		m_sprite = clan::Sprite();
 	}
+}
+
+void why::BubbleObject::set_has_collided_with_paddle(bool value)
+{
+	m_has_collided_with_paddle = value;
 }
 
 void why::BubbleObject::on_collision_end(clan::Body &b)
