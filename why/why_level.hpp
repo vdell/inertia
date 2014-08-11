@@ -59,6 +59,8 @@ namespace why
 	 *
 	 * @detail This class describes a single level in the game world. It takes care of the level 
 	 *         objects (adding/removing/drawing/positioning).
+	 *
+	 * @bug The block positioning is a bit off when using left or right alignment
 	 *         
 	 **/
 	class Level
