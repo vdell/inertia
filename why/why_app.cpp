@@ -59,8 +59,6 @@ int why::Application::start ( const std::vector<std::string> &args )
 	m_music_player.shuffle();
 	m_music_player.play();
 
-	Canvas canvas(window);
-
 	ubyte64 time_elapsed_ms = 0;
 	ubyte64 last_time = System::get_time();
 	ubyte64 current_time = System::get_time();
@@ -73,37 +71,31 @@ int why::Application::start ( const std::vector<std::string> &args )
 		current_time = System::get_time();
 		time_elapsed_ms = current_time - last_time;
 		last_time = current_time;
-
-		if ( window.get_gc() != canvas.get_gc() )
-		{
-			// Always get the graphic context, the window may have been recreated
-			canvas = Canvas ( window );
-		}
 		
-		draw_background(canvas);
+		draw_background(m_canvas);
 		
 		if (gs::is_active(GameStateValue::Playing))
 		{
 				enable_menu_events(false);
 				m_world->enable_events();
 				m_world->update(m_fixed_timestep, time_elapsed_ms, 5);
-				m_world->draw(canvas);
-				draw_score(canvas);
-				draw_lives_left(canvas);
-				draw_time_elapsed(canvas);
+				m_world->draw(m_canvas);
+				draw_score(m_canvas);
+				draw_lives_left(m_canvas);
+				draw_time_elapsed(m_canvas);
 		}
 		else if (gs::is_active(GameStateValue::Menu))
 		{
 				assert(m_main_menu);
 				enable_menu_events();
 				m_world->enable_events(false);
-				draw_main_menu(canvas);
+				draw_main_menu(m_canvas);
 		}
 		else if (gs::is_active(GameStateValue::GameOver))
 		{
 			m_world->enable_events(false);
 			m_main_menu->show(MenuItemId::ResumeGame, false);
-			draw_game_over(canvas);
+			draw_game_over(m_canvas);
 		}
 		else if (gs::is_active(GameStateValue::LevelCompleted))
 		{
@@ -122,7 +114,7 @@ int why::Application::start ( const std::vector<std::string> &args )
 		else if (gs::is_active(GameStateValue::Credits))
 		{
 			m_world->enable_events(false);
-			draw_credits(canvas);
+			draw_credits(m_canvas);
 		}
 		
 		if (gs::is_active(GameStateValue::Paused) && !gs::is_active(GameStateValue::Menu))
@@ -130,12 +122,12 @@ int why::Application::start ( const std::vector<std::string> &args )
 			m_world->enable_events(false);
 			slot_mouse_clicked.enable();
 			slot_input_down.enable();
-			draw_game_paused(canvas);
+			draw_game_paused(m_canvas);
 		}
 		
 		if (gs::is_active(GameStateValue::Console))
 		{
-			m_console_wnd->draw(canvas);
+			m_console_wnd->draw(m_canvas);
 			m_world->enable_events(false);
 		}
 
@@ -158,7 +150,7 @@ void why::Application::initialize()
 
 	WHY_LOG() << "Window created " << (window.is_fullscreen() ? "(FULLSCREEN)" : "(WINDOWED)");
 
-	Canvas canvas(window);
+	m_canvas = Canvas(window);
 
 	m_rc_manager = new ResourceManager(&window, m_settings);
 	m_rc_manager->load(m_settings.get_as_str("game.paths.resources_root"));
@@ -167,7 +159,7 @@ void why::Application::initialize()
 
 	m_music_player.set_soundtrack(m_rc_manager->get_soundtrack());
 
-	m_world = new World(window, canvas, m_rc_manager, m_settings);
+	m_world = new World(window, m_canvas, m_rc_manager, m_settings);
 	m_world_area = m_world->get_world_area();
 
 	WHY_LOG() << "World created";
