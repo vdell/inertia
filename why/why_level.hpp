@@ -150,7 +150,7 @@ namespace why
 		//! Resets the combo count to zero.
 		void reset_combo_count();
 	private:
-		void set_positions();
+		void set_positions(clan::Canvas &parent_canvas);
 		float get_row_width(unsigned int idx) const;
 
 		void start_timer();

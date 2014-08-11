@@ -297,7 +297,7 @@ void why::Level::load(const std::string &path, clan::Canvas &c, const ResourceMa
 {
 	reset();
 	LevelLoader(path, *this, c, rcm, pc, sm);
-	set_positions();
+	set_positions(c);
 	for (auto row : m_objects)
 	{
 		for (auto obj : row.second)
@@ -362,13 +362,16 @@ void why::Level::reset()
 	m_level_timer.stop();
 }
 
-void why::Level::set_positions()
+void why::Level::set_positions(clan::Canvas &parent_canvas)
 {
 	using namespace clan;
 
 	if (m_objects.empty()) return;
 
+	const float pos_adjust = (parent_canvas.get_width() > m_area.get_width() ? (parent_canvas.get_width() - m_area.get_width())/2.0f : 0.0f);
+
 	Pointf pos;
+
 	pos.y = m_area.top;
 	bool new_row = true;
 
@@ -395,7 +398,7 @@ void why::Level::set_positions()
 			{
 				if (new_row)
 				{
-					pos.x = width + spacer->margin_left();
+					pos.x = width + spacer->margin_left() + pos_adjust;
 					pos.y += spacer->margin_bottom() + height + spacer->margin_top();
 					new_row = false;
 				}
@@ -452,21 +455,20 @@ void why::Level::set_positions()
 				{
 				case RowAligment::Left:
 				{
-					pos.x = m_area.left;
-					pos.x += m_area.get_width()*0.005f;
+					pos.x = m_area.left + pos_adjust;
 					break;
 				}
 				case RowAligment::Right:
 				{
 					pos.x = (m_area.right - row_width) - ((block->margin_left()*o_pair.second.size() +
 						(block->margin_left() * o_pair.second.size())));
-					pos.x -= m_area.get_width()*0.005f;
+					pos.x -= pos_adjust;
 					break;
 				}
 				case RowAligment::Center:
 				{
-					pos.x = ((m_area.left + m_area.get_width() / 2) - row_width / 2) - (
-						(block->margin_left() * o_pair.second.size()));
+					pos.x = ((m_area.left + m_area.get_width() / 2.0f) - row_width / 2.0f) - 
+						(block->margin_left() * o_pair.second.size());
 					break;
 				}
 				}
