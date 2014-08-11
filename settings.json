@@ -1,6 +1,6 @@
 {
     "debug": {
-        "enable_box2d_debug_draw": true,
+        "enable_box2d_debug_draw": false,
         "log_file": "why.log"
     },
     "game": {
@@ -27,7 +27,7 @@
         "video": {
             "resolution_width": 1360,
             "resolution_height": 1024,
-			"enable_fullscreen": false
+			"enable_fullscreen": true
         },
 		"sound": {
 			"music_volume": 0.0,
