@@ -74,7 +74,7 @@ void why::LevelLoader::create_empty_rows(Row r, unsigned int count)
 	for (unsigned int c = 0; c < count; ++c)
 	{
 		r.m_index = m_to.get_objects().size();
-		m_to.add_object(r, new SpacerObject(clan::Size((int)m_to.get_area().get_width(), 27)));
+		m_to.add_object(r, new SpacerObject(clan::Size(static_cast<int>(m_to.get_area().get_width()), 27)));
 	}
 }
 
