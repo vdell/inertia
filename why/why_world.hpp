@@ -133,7 +133,7 @@ namespace why
 		float m_fixed_timestep_accumulator, 
 			m_fixed_timestep_accumulator_ratio;
 
-		int m_paddle_angle_mod;
+		clan::Angle m_paddle_angle_mod;
 
 		clan::PhysicsWorld m_pworld;
 
