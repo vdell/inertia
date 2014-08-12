@@ -531,7 +531,7 @@ void why::World::smooth_states()
 	}
 }
 
-unsigned int why::World::kill_ball()
+unsigned int why::World::kill_ball(bool do_death_flash_effect)
 {
 	using namespace clan;
 	assert(m_player_lives > 0);
@@ -540,9 +540,12 @@ unsigned int why::World::kill_ball()
 	m_ball->stop_movement();
 	m_ball_linear_velocity = Vec2f(0.0f, 0.0f);
 
-	const int dfe_duration_ms = 2000;
+	if (do_death_flash_effect)
+	{
+		const int dfe_duration_ms = 2000;
 
-	m_active_effects.push_back(new DeathFlashEffect(dfe_duration_ms, 1, m_area));
+		m_active_effects.push_back(new DeathFlashEffect(dfe_duration_ms, 1, m_area));
+	}
 
 	return m_player_lives;
 }
@@ -551,7 +554,7 @@ void why::World::kill_player()
 {
 	while (get_player_lives() > 0)
 	{
-		kill_ball();
+		kill_ball(false);
 	}
 }
 

@@ -81,7 +81,7 @@ namespace why
 
 		void draw_dbg(clan::Canvas &c);
 
-		unsigned int kill_ball();
+		unsigned int kill_ball(bool do_death_flash_effect = true);
 		bool is_ball_lost() const;
 
 		void smooth_states();
