@@ -64,7 +64,7 @@ why::WidthModifier::WidthModifier(const WidthModifier &cpy) : GameObjectModifier
 
 void why::WidthModifier::update(clan::ubyte64 time_elapsed_ms)
 {
-	if ((time_elapsed_ms - m_time_elapsed_on_apply) >= m_mod_duration_ms)
+	if ((clan::System::get_time() - m_time_elapsed_on_apply) >= m_mod_duration_ms)
 	{
 		reset();
 	}
