@@ -395,6 +395,15 @@ void why::World::update(float fixed_timestep, clan::ubyte64 time_elapsed_ms, int
 	}
 	else
 	{
+		for (auto object : m_objects)
+		{
+			auto bo = dynamic_cast<BubbleObject*>(object);
+			if (bo && bo->has_collided_with_paddle())
+			{
+				add_random_mod_to_paddle();
+			}
+		}
+
 		kill_bubbles(false);
 
 		static const int req_combo_count_for_bubbles = 2;
@@ -404,16 +413,6 @@ void why::World::update(float fixed_timestep, clan::ubyte64 time_elapsed_ms, int
 		{
 			spawn_bubble();
 			m_level->reset_combo_count();
-		}
-
-		for (auto object : m_objects)
-		{
-			auto bo = dynamic_cast<BubbleObject*>(object);
-			if (bo && bo->has_collided_with_paddle())
-			{
-				add_random_mod_to_paddle();
-				bo->set_has_collided_with_paddle(false);
-			}
 		}
 	}
 }
@@ -456,7 +455,7 @@ void why::World::kill_bubbles(bool kill_all)
 		while (it != m_objects.end())
 		{
 			auto bubble_o = dynamic_cast<BubbleObject*>(*it);
-			if (bubble_o && bubble_o->get_position().y > m_area.bottom)
+			if ((bubble_o && bubble_o->get_position().y > m_area.bottom) || (bubble_o && bubble_o->has_collided_with_paddle()))
 			{
 				Purgatory::add(bubble_o);
 				it = m_objects.erase(it);
