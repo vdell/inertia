@@ -123,6 +123,7 @@
     <ClCompile Include="why_level.cpp" />
     <ClCompile Include="why_settings_manager.cpp" />
     <ClCompile Include="why_utilities.cpp" />
+    <ClCompile Include="why_wall_object.cpp" />
     <ClCompile Include="why_world.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +149,7 @@
     <ClInclude Include="why_resource_manager.hpp" />
     <ClInclude Include="why_settings_manager.hpp" />
     <ClInclude Include="why_utilities.hpp" />
+    <ClInclude Include="why_wall_object.hpp" />
     <ClInclude Include="why_world.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

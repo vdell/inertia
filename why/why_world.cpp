@@ -5,6 +5,7 @@
 #include "why_utilities.hpp"
 #include "why_bubble_object.hpp"
 #include "why_game_object_modifier.hpp"
+#include "why_wall_object.hpp"
 
 //////////////////////////////////////////////////
 // World
@@ -93,8 +94,6 @@ void why::World::initialize()
 		m_pworld.get_pc(), m_settings);
 	add_object(m_paddle);
 
-	
-
 	slot_mouse_move = m_parent->get_ic().get_mouse().sig_pointer_move().connect(this, &World::on_mouse_move);
 	slot_mouse_click = m_parent->get_ic().get_mouse().sig_key_up().connect(this, &World::on_mouse_click);
 	slot_input_down = m_parent->get_ic().get_keyboard().sig_key_down().connect(this, &World::on_kbd_down);
@@ -164,79 +163,9 @@ bool why::World::load_next_level()
 
 void why::World::create_area()
 {
-	using namespace clan;
-
-	const float wall_thickness = 5.0f;
-	const float area_width = m_area.get_width();
-
-	//////////////////////////////////////////////
-	// Ground
-	//////////////////////////////////////////////
-
-	/*
-	BodyDescription ground_desc(m_pworld);
-	ground_desc.set_position(Pointf(m_area.left + m_area.get_width() / 2.0f, m_area.bottom + wall_thickness/2.0f));
-	ground_desc.set_type(body_static);
-
-	Body ground(m_pworld.get_pc(), ground_desc);
-
-	Fixture ground_fixture(m_pworld.get_pc(), ground, gf_fixture_desc);
-	*/
-
-	// Ground/floor shape
-	PolygonShape gf_shape(m_pworld);
-	gf_shape.set_as_box(area_width / 2.0f, wall_thickness);
-
-	// Ground/floor fixture
-	FixtureDescription gf_fixture_desc(m_pworld);
-	gf_fixture_desc.set_friction(0.0f);
-	gf_fixture_desc.set_shape(gf_shape);
-	gf_fixture_desc.set_density(1.0f);
-	gf_fixture_desc.set_restitution(1.0f);
-
-	//////////////////////////////////////////////
-	// Roof
-	//////////////////////////////////////////////
-
-	BodyDescription roof_desc(m_pworld);
-	roof_desc.set_position(Pointf(m_area.left + area_width / 2.0f, m_area.top - wall_thickness / 2.0f));
-	roof_desc.set_type(body_static);
-
-	Body roof(m_pworld.get_pc(), roof_desc);
-	Fixture roof_fixture(m_pworld.get_pc(), roof, gf_fixture_desc);
-
-	//////////////////////////////////////////////
-	// Walls
-	//////////////////////////////////////////////
-
-	// Left
-
-	BodyDescription leftw_desc(m_pworld);
-	leftw_desc.set_position(Pointf(m_area.left - wall_thickness / 2.0f, m_area.top + m_area.get_height() / 2.0f));
-	leftw_desc.set_type(body_static);
-
-	Body leftw(m_pworld.get_pc(), leftw_desc);
-
-	PolygonShape wall_shape(m_pworld);
-	wall_shape.set_as_box(wall_thickness, m_area.get_height() / 2.0f);
-
-	FixtureDescription wall_fixture_desc(m_pworld);
-	wall_fixture_desc.set_shape(wall_shape);
-	wall_fixture_desc.set_density(1.0f);
-	wall_fixture_desc.set_friction(0.0f);
-	wall_fixture_desc.set_restitution(1.0f);
-
-	Fixture leftw_fixture(m_pworld.get_pc(), leftw, wall_fixture_desc);
-
-	// Right
-
-	BodyDescription rightw_desc(m_pworld);
-	rightw_desc.set_position(Pointf(m_area.right - wall_thickness / 2, m_area.top + m_area.get_height() / 2.0f));
-	rightw_desc.set_type(body_static);
-
-	Body rightw(m_pworld.get_pc(), rightw_desc);
-
-	Fixture right_fixture(m_pworld.get_pc(), rightw, wall_fixture_desc);
+	add_object(new WallObject(WallPosition::Top, m_area, m_pworld.get_pc()));
+	add_object(new WallObject(WallPosition::Left, m_area, m_pworld.get_pc()));
+	add_object(new WallObject(WallPosition::Right, m_area, m_pworld.get_pc()));
 }
 
 void why::World::create_physics()
