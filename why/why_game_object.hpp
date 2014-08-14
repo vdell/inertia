@@ -131,8 +131,6 @@ namespace why
 		virtual clan::FixtureDescription fixture_description(clan::PhysicsContext &pc) const;
 		virtual clan::BodyDescription body_description(clan::PhysicsContext &pc) const = 0;
 
-		void align_sprite_with_body();
-
 		virtual bool is_collidable() const;
 
 		void draw(clan::Canvas &c);

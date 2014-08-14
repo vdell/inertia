@@ -556,8 +556,6 @@ void why::Level::update(clan::ubyte64 time_elapsed_ms)
 					}
 					else
 					{
-						// When dead, the blocks start to fall, so update position
-						o->align_sprite_with_body();
 						add_falling_block(o);
 					}
 					if (m_falling_blocks.size() > 1 && !m_combo_started)

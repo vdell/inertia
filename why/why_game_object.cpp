@@ -289,17 +289,6 @@ void why::CollidableObject::set_rotation(clan::Angle a)
 	StaticObject::set_rotation(a);
 }
 
-void why::CollidableObject::align_sprite_with_body()
-{
-	using namespace clan;
-
-	float sx = 0.0f, sy = 0.0f;
-	m_sprite.get_scale(sx, sy);
-	
-	StaticObject::set_position(Pointf(m_body.get_position().x - (get_width() * sx) / 2,
-		m_body.get_position().y - (get_height() * sy) / 2));
-}
-
 clan::FixtureDescription why::CollidableObject::fixture_description(clan::PhysicsContext &pc) const
 {
 	clan::FixtureDescription fd(pc);
