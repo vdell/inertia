@@ -106,10 +106,11 @@ bool why::GameObjectBase::is_destroyable() const
 
 
 why::StaticObject::StaticObject(long id, clan::Sprite sprite, const std::string &name) :
-GameObjectBase(id, name), m_sprite(sprite.clone())
+GameObjectBase(id, name)
 {
-	if (!m_sprite.is_null())
+	if (!sprite.is_null())
 	{
+		m_sprite = sprite.clone();
 		m_rect.set_size((clan::Sizef)sprite.get_size());
 	}
 }
@@ -186,12 +187,21 @@ clan::Sprite why::StaticObject::get_sprite() const
 
 void why::StaticObject::set_scale (float x, float y)
 {
+	if (m_sprite.is_null()) return;
 	m_sprite.set_scale(x, y);
 }
 
 void why::StaticObject::get_scale(float &x, float &y) const
 {
-	m_sprite.get_scale(x, y);
+	if (m_sprite.is_null())
+	{
+		x = 1.0f;
+		y = 1.0f;
+	}
+	else
+	{
+		m_sprite.get_scale(x, y);
+	}
 }
 
 //////////////////////////////////////////////
@@ -206,7 +216,7 @@ why::CollidableObject::CollidableObject(long id, clan::Canvas *canvas, clan::Spr
 
 why::CollidableObject::~CollidableObject()
 {
-	m_body.kill();
+
 }
 
 why::CollidableObject::CollidableObject(const CollidableObject &cpy) : StaticObject(cpy), clan::PhysicsObject(cpy)
@@ -219,6 +229,8 @@ why::CollidableObject::CollidableObject(const CollidableObject &cpy) : StaticObj
 
 void why::CollidableObject::draw(clan::Canvas &c)
 {
+	if (m_sprite.is_null()) return;
+
 	const clan::Vec2f pos(m_body.get_position());
 	float sx = 0.0f, sy = 0.0f;
 	m_sprite.get_scale(sx, sy);
