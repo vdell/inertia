@@ -135,6 +135,6 @@ namespace why
 
 		clan::PhysicsWorld m_pworld;
 
-		clan::PhysicsDebugDraw m_dbg_draw;
+		clan::PhysicsDebugDraw *m_dbg_draw;
 	};
 }

@@ -18,6 +18,7 @@ why::World::World(clan::DisplayWindow &parent, clan::Canvas &c, ResourceManager 
 
 	m_paddle_angle_mod.set_degrees(0.0f);
 	
+	m_dbg_draw = nullptr;
 	m_level = nullptr;
 	
 	m_canvas = &c;
@@ -37,6 +38,7 @@ why::World::World(clan::DisplayWindow &parent, clan::Canvas &c, ResourceManager 
 
 why::World::~World()
 {
+	delete m_dbg_draw;
 	delete m_level;
 	for (auto o : m_objects)
 	{
@@ -174,8 +176,9 @@ void why::World::create_physics()
 
 	if (m_settings.get_as_bool("debug.enable_box2d_debug_draw", false))
 	{
-		m_dbg_draw = PhysicsDebugDraw(m_pworld);
-		m_dbg_draw.set_flags(f_shape | f_aabb);
+		assert(!m_dbg_draw);
+		m_dbg_draw = new PhysicsDebugDraw(m_pworld);
+		m_dbg_draw->set_flags(f_shape | f_aabb);
 	}
 }
 
@@ -505,11 +508,9 @@ void why::World::draw(clan::Canvas &canvas)
 
 		// Box2D debug draw can also be used in release builds.
 
-		static const bool box2d_dbg_draw_enabled = m_settings.get_as_bool("debug.enable_box2d_debug_draw", false);
-
-		if (box2d_dbg_draw_enabled)
+		if (m_dbg_draw)
 		{
-			m_dbg_draw.draw(canvas);
+			m_dbg_draw->draw(canvas);
 		}
 	}
 
