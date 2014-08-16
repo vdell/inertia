@@ -216,7 +216,7 @@ why::CollidableObject::CollidableObject(long id, clan::Canvas *canvas, clan::Spr
 
 why::CollidableObject::~CollidableObject()
 {
-
+	m_body.kill();
 }
 
 why::CollidableObject::CollidableObject(const CollidableObject &cpy) : StaticObject(cpy), clan::PhysicsObject(cpy)
