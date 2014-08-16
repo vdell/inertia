@@ -20,7 +20,6 @@ why::World::World(clan::DisplayWindow &parent, clan::Canvas &c, ResourceManager 
 	
 	m_level = nullptr;
 	
-	m_parent = &parent;
 	m_canvas = &c;
 
 	m_fixed_timestep_accumulator = 0;
@@ -34,7 +33,7 @@ why::World::World(clan::DisplayWindow &parent, clan::Canvas &c, ResourceManager 
 	m_line_color = clan::Colorf::white;
 	m_line_color.set_alpha(0.3f);
 
-	initialize();
+	initialize(parent);
 }
 
 why::World::~World()
@@ -72,7 +71,7 @@ void why::World::resume()
 	WHY_LOG() << "Game resumed";
 }
 
-void why::World::initialize()
+void why::World::initialize(clan::DisplayWindow &parent_wnd)
 {
 	m_box2d_debug_draw_enabled = m_settings.get_as_bool("debug.enable_box2d_debug_draw", false);
 
@@ -94,10 +93,10 @@ void why::World::initialize()
 		m_pworld.get_pc(), m_settings);
 	add_object(m_paddle);
 
-	slot_mouse_move = m_parent->get_ic().get_mouse().sig_pointer_move().connect(this, &World::on_mouse_move);
-	slot_mouse_click = m_parent->get_ic().get_mouse().sig_key_up().connect(this, &World::on_mouse_click);
-	slot_input_down = m_parent->get_ic().get_keyboard().sig_key_down().connect(this, &World::on_kbd_down);
-	slot_input_up = m_parent->get_ic().get_keyboard().sig_key_up().connect(this, &World::on_kbd_up);
+	slot_mouse_move = parent_wnd.get_ic().get_mouse().sig_pointer_move().connect(this, &World::on_mouse_move);
+	slot_mouse_click = parent_wnd.get_ic().get_mouse().sig_key_up().connect(this, &World::on_mouse_click);
+	slot_input_down = parent_wnd.get_ic().get_keyboard().sig_key_down().connect(this, &World::on_kbd_down);
+	slot_input_up = parent_wnd.get_ic().get_keyboard().sig_key_up().connect(this, &World::on_kbd_up);
 }
 
 void why::World::load_level_index()

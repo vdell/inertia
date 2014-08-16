@@ -70,7 +70,7 @@ namespace why
 
 		void reset_positions();
 	private:
-		void initialize();
+		void initialize(clan::DisplayWindow &parent_wnd);
 		void create_area();
 		void create_physics();
 
@@ -120,7 +120,6 @@ namespace why
 		clan::Rectf m_area;
 		clan::Colorf m_area_color, m_line_color;
 		clan::Canvas *m_canvas;
-		clan::DisplayWindow *m_parent;
 
 		clan::Slot slot_mouse_move;
 		clan::Slot slot_mouse_click;
