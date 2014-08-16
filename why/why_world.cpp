@@ -73,8 +73,6 @@ void why::World::resume()
 
 void why::World::initialize(clan::DisplayWindow &parent_wnd)
 {
-	m_box2d_debug_draw_enabled = m_settings.get_as_bool("debug.enable_box2d_debug_draw", false);
-
 	m_area = get_world_area();
 
 	m_area_color = clan::Colorf(m_settings.get_as_str("game.core.game_area_color_hex", "#000913"));
@@ -177,7 +175,7 @@ void why::World::create_physics()
 	m_pworld = PhysicsWorld(pwd);
 	m_pworld.set_auto_clear_forces(false);
 
-	if (m_box2d_debug_draw_enabled)
+	if (m_settings.get_as_bool("debug.enable_box2d_debug_draw", false))
 	{
 		m_dbg_draw = PhysicsDebugDraw(m_pworld);
 		m_dbg_draw.set_flags(f_shape | f_aabb);
@@ -511,7 +509,9 @@ void why::World::draw(clan::Canvas &canvas)
 
 		// Box2D debug draw can also be used in release builds.
 
-		if (m_box2d_debug_draw_enabled)
+		static const bool box2d_dbg_draw_enabled = m_settings.get_as_bool("debug.enable_box2d_debug_draw", false);
+
+		if (box2d_dbg_draw_enabled)
 		{
 			m_dbg_draw.draw(canvas);
 		}

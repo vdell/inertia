@@ -113,7 +113,7 @@ namespace why
 		BallObject *m_ball;
 		PaddleObject *m_paddle;
 
-		bool m_box2d_debug_draw_enabled, m_events_enabled, m_paused;
+		bool m_events_enabled, m_paused;
 
 		clan::Rectf m_area;
 		clan::Colorf m_area_color, m_line_color;
