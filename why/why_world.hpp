@@ -113,8 +113,6 @@ namespace why
 		BallObject *m_ball;
 		PaddleObject *m_paddle;
 
-		float m_paddle_btm_margin;
-
 		bool m_box2d_debug_draw_enabled, m_events_enabled, m_paused;
 
 		clan::Rectf m_area;
