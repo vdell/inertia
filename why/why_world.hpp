@@ -116,7 +116,7 @@ namespace why
 		BallObject *m_ball;
 		PaddleObject *m_paddle;
 
-		bool m_events_enabled, m_paused;
+		bool m_events_enabled;
 
 		clan::Rectf m_area;
 		clan::Colorf m_area_color, m_line_color;

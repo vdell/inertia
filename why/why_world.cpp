@@ -28,7 +28,6 @@ why::World::World(clan::DisplayWindow &parent, clan::Canvas &c, ResourceManager 
 	m_total_score = 0;
 
 	m_events_enabled = false;
-	m_paused = false;
 
 	m_line_color = clan::Colorf::white;
 	m_line_color.set_alpha(0.3f);
@@ -53,7 +52,6 @@ why::World::~World()
 
 void why::World::pause()
 {
-	m_paused = true;
 	enable_events(false);
 	m_ball->pause_movement();
 	m_level->pause();
@@ -63,7 +61,6 @@ void why::World::pause()
 
 void why::World::resume()
 {
-	m_paused = false;
 	enable_events();
 	m_ball->resume_movement();
 	m_level->start();
