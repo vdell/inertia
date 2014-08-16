@@ -394,6 +394,17 @@ void why::MovingObject::stop_movement()
 	m_body.set_angular_velocity(Angle(0, AngleUnit::angle_degrees));
 }
 
+void why::MovingObject::pause_movement()
+{
+	m_linear_velocity = m_body.get_linear_velocity();
+	stop_movement();
+}
+
+void why::MovingObject::resume_movement()
+{
+	m_body.set_linear_velocity(m_linear_velocity);
+}
+
 bool why::MovingObject::is_moving() const
 {
 	return (m_body.get_linear_velocity() != clan::Vec2f(0, 0));

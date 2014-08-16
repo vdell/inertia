@@ -172,6 +172,8 @@ namespace why
 		MovingObject(const MovingObject &cpy);
 
 		void stop_movement();
+		void pause_movement();
+		void resume_movement();
 		bool is_moving() const;
 
 		clan::Vec2f get_prev_position() const;
@@ -190,6 +192,7 @@ namespace why
 
 		virtual bool is_movable() const;
 	private:
+		clan::Vec2f m_linear_velocity;
 		clan::Vec2f m_prev_pos, m_smoothed_pos;
 		float m_prev_angle, m_smoothed_angle;
 	};

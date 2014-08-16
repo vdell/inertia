@@ -123,8 +123,6 @@ namespace why
 		clan::Slot slot_mouse_click;
 		clan::Slot slot_input_down, slot_input_up;
 
-		clan::Vec2f m_ball_linear_velocity;
-
 		unsigned int m_player_lives, m_total_score;
 
 		float m_fixed_timestep_accumulator, 

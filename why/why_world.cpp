@@ -55,7 +55,7 @@ void why::World::pause()
 {
 	m_paused = true;
 	enable_events(false);
-	m_ball_linear_velocity = m_ball->body().get_linear_velocity();
+	m_ball->pause_movement();
 	m_level->pause();
 
 	WHY_LOG() << "Game paused";
@@ -65,7 +65,7 @@ void why::World::resume()
 {
 	m_paused = false;
 	enable_events();
-	m_ball->body().set_linear_velocity(m_ball_linear_velocity);
+	m_ball->resume_movement();
 	m_level->start();
 
 	WHY_LOG() << "Game resumed";
@@ -462,7 +462,6 @@ unsigned int why::World::kill_ball(bool do_death_flash_effect)
 	--m_player_lives;
 	m_paddle->stop_movement();
 	m_ball->stop_movement();
-	m_ball_linear_velocity = Vec2f(0.0f, 0.0f);
 
 	if (do_death_flash_effect)
 	{
