@@ -160,7 +160,7 @@ void why::Application::initialize()
 	m_music_player.set_soundtrack(m_rc_manager->get_soundtrack());
 
 	m_world = new World(window, m_canvas, m_rc_manager, m_settings);
-	m_world_area = m_world->get_world_area();
+	m_world_area = m_world->get_world_area(m_canvas);
 
 	WHY_LOG() << "World created";
 

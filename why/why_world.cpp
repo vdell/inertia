@@ -33,7 +33,7 @@ why::World::World(clan::DisplayWindow &parent, clan::Canvas &c, ResourceManager 
 	m_line_color = clan::Colorf::white;
 	m_line_color.set_alpha(0.3f);
 
-	initialize(parent);
+	initialize(parent, c);
 }
 
 why::World::~World()
@@ -71,9 +71,9 @@ void why::World::resume()
 	WHY_LOG() << "Game resumed";
 }
 
-void why::World::initialize(clan::DisplayWindow &parent_wnd)
+void why::World::initialize(clan::DisplayWindow &parent_wnd, clan::Canvas &c)
 {
-	m_area = get_world_area();
+	m_area = get_world_area(c);
 
 	m_area_color = clan::Colorf(m_settings.get_as_str("game.core.game_area_color_hex", "#000913"));
 	m_area_color.set_alpha(0.7f);
@@ -82,10 +82,10 @@ void why::World::initialize(clan::DisplayWindow &parent_wnd)
 	create_physics();
 	create_area();
 
-	m_ball = new BallObject(-1, m_canvas, m_rc_manager->get_sprite(ResourceId::PlayerBall),
+	m_ball = new BallObject(-1, &c, m_rc_manager->get_sprite(ResourceId::PlayerBall),
 		m_pworld.get_pc(), 1, m_settings);
 	add_object(m_ball);
-	m_paddle = new PaddleObject(-1, m_canvas, m_rc_manager->get_sprite(ResourceId::PlayerPaddle), 
+	m_paddle = new PaddleObject(-1, &c, m_rc_manager->get_sprite(ResourceId::PlayerPaddle), 
 		m_pworld.get_pc(), m_settings);
 	add_object(m_paddle);
 
@@ -564,14 +564,14 @@ void why::World::reset_positions()
 	m_ball->set_position(bp);
 }
 
-clan::Rectf why::World::get_world_area() const
+clan::Rectf why::World::get_world_area(const clan::Canvas &c) const
 {
 	const float width = m_settings.get_as_float("game.core.game_area_width");
 	const float height = m_settings.get_as_float("game.core.game_area_height");
 
-	const float min_x ( (m_canvas->get_width() - width) / 2.0f);
+	const float min_x ( (c.get_width() - width) / 2.0f);
 	const float max_x ( min_x + width );
-	const float min_y((m_canvas->get_height() - height) / 2.0f);
+	const float min_y((c.get_height() - height) / 2.0f);
 	const float max_y ( min_y + height );
 	return clan::Rectf (min_x, min_y, max_x, max_y);
 }

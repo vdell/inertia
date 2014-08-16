@@ -59,9 +59,6 @@ namespace why
 		//! Resets the total score to zero
 		void reset_score();
 
-		//! Returns the world area (i.e. the space for the blocks, paddle and balls)
-		clan::Rectf get_world_area() const;
-
 		void update(float fixed_timestep, clan::ubyte64 time_elapsed_ms, int max_steps);
 		void draw(clan::Canvas &canvas);
 
@@ -69,8 +66,14 @@ namespace why
 		boost::tuple<int, int, int> get_level_time_elapsed() const;
 
 		void reset_positions();
+
+		/* @brief Returns the world area (i.e. the space for the blocks, paddle and balls)
+		*
+		* @param c The canvas to which the world is drawn
+		**/
+		clan::Rectf get_world_area(const clan::Canvas &c) const;
 	private:
-		void initialize(clan::DisplayWindow &parent_wnd);
+		void initialize(clan::DisplayWindow &parent_wnd, clan::Canvas &c);
 		void create_area();
 		void create_physics();
 
