@@ -75,8 +75,6 @@ void why::World::initialize(clan::DisplayWindow &parent_wnd)
 {
 	m_box2d_debug_draw_enabled = m_settings.get_as_bool("debug.enable_box2d_debug_draw", false);
 
-	m_paddle_btm_margin = m_settings.get_as_float("game.core.paddle_btm_margin_perc", 0.05f);
-
 	m_area = get_world_area();
 
 	m_area_color = clan::Colorf(m_settings.get_as_str("game.core.game_area_color_hex", "#000913"));
@@ -613,7 +611,9 @@ void why::World::on_mouse_move(const clan::InputEvent &evt)
 		pp.x = evt.mouse_pos.x - paddle_middle;
 	}
 
-	pp.y = m_area.bottom - (paddle_height + m_area.get_height() * m_paddle_btm_margin);
+	static const float paddle_btm_margin = m_settings.get_as_float("game.core.paddle_btm_margin_perc", 0.05f);
+
+	pp.y = m_area.bottom - (paddle_height + m_area.get_height() * paddle_btm_margin);
 
 	m_paddle->set_position(pp);
 
