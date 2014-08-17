@@ -131,8 +131,6 @@ namespace why
 		float m_fixed_timestep_accumulator, 
 			m_fixed_timestep_accumulator_ratio;
 
-		clan::Angle m_paddle_angle_mod;
-
 		clan::PhysicsWorld m_pworld;
 
 		clan::PhysicsDebugDraw *m_dbg_draw;

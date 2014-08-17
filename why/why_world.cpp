@@ -15,8 +15,6 @@ why::World::World(clan::DisplayWindow &parent, clan::Canvas &c, ResourceManager 
 	const SettingsManager &sm) : m_rc_manager(rc_mngr), m_settings(sm)
 {
 	assert(m_rc_manager);
-
-	m_paddle_angle_mod.set_degrees(0.0f);
 	
 	m_dbg_draw = nullptr;
 	m_level = nullptr;
@@ -638,7 +636,7 @@ void why::World::on_mouse_click(const clan::InputEvent &evt)
 	{
 		assert(!m_ball->is_moving());
 		m_level->start();
-		m_ball->initial_shoot(Vec2f(0.0f, -sin(m_paddle_angle_mod.to_radians()) + 5.0f));
+		m_ball->initial_shoot(Vec2f(0.0f, -sin(m_paddle->get_rotation().to_radians()) + 5.0f));
 	}
 }
 
@@ -646,10 +644,9 @@ void why::World::on_kbd_up(const clan::InputEvent &evt)
 {
 	using namespace clan;
 
-	if (m_paddle_angle_mod.to_degrees() != 0.0f)
+	if (evt.id == keycode_a || evt.id == keycode_d)
 	{
-		m_paddle_angle_mod.set_degrees(0.0f);
-		m_paddle->set_rotation(m_paddle_angle_mod);
+		m_paddle->set_rotation(Angle(0.0f, AngleUnit::angle_degrees));
 	}
 }
 
@@ -657,13 +654,12 @@ void why::World::on_kbd_down(const clan::InputEvent &evt)
 {	
 	using namespace clan;
 
-	if (evt.str == "a")
+	if (evt.id == keycode_a)
 	{
-		m_paddle_angle_mod.set_degrees(-15.0f);
+		m_paddle->set_rotation(clan::Angle(-15.0f, clan::AngleUnit::angle_degrees));
 	}
-	else if (evt.str == "d")
+	else if (evt.id == keycode_d)
 	{
-		m_paddle_angle_mod.set_degrees(15.0f);
+		m_paddle->set_rotation(clan::Angle(15.0f, clan::AngleUnit::angle_degrees));
 	}
-	m_paddle->set_rotation(m_paddle_angle_mod);
 }
