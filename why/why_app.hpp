@@ -80,13 +80,11 @@ namespace why
 		ResourceManager *m_rc_manager;
 
 		World *m_world;
-		clan::Size m_resolution;
 		clan::Rectf m_world_area;
 		clan::Sprite m_player_ball_sprite, m_game_bg_sprite, m_menu_bg_sprite;
 
 		clan::Canvas m_canvas;
 
-		std::multimap < std::string, std::string > m_credits;
 		Menu *m_main_menu;
 	};
 

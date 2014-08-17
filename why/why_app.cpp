@@ -143,9 +143,6 @@ void why::Application::initialize()
 {
 	using namespace clan;
 
-	m_resolution.width = m_settings.get_as_int("game.video.resolution_width");
-	m_resolution.height = m_settings.get_as_int("game.video.resolution_height");
-
 	create_window();
 
 	WHY_LOG() << "Window created " << (window.is_fullscreen() ? "(FULLSCREEN)" : "(WINDOWED)");
@@ -194,9 +191,15 @@ void why::Application::init_signals()
 void why::Application::create_window()
 {
 	using namespace clan;
+
+	clan::Size resolution;
+
+	resolution.width = m_settings.get_as_int("game.video.resolution_width");
+	resolution.height = m_settings.get_as_int("game.video.resolution_height");
+
 	DisplayWindowDescription window_description;
 	window_description.set_title("Inertia");
-	window_description.set_size(m_resolution, true);
+	window_description.set_size(resolution, true);
 	window_description.set_fullscreen(m_settings.get_as_bool("game.video.enable_fullscreen", false));
 	window_description.show_caption();
 	window = DisplayWindow(window_description);
