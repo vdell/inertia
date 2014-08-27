@@ -414,7 +414,10 @@ void why::MovingObject::draw(clan::Canvas &c)
 {
 	if (!m_sprite.is_null())
 	{
-		m_sprite.draw(c, get_smoothed_position().x - get_width() / 2, get_smoothed_position().y - get_height() / 2);
+		const clan::Vec2f pos(get_smoothed_position());
+		float sx = 0.0f, sy = 0.0f;
+		m_sprite.get_scale(sx, sy);
+		m_sprite.draw(c, pos.x - (get_width() * sx) / 2.0f, pos.y - (get_height() * sy) / 2.0f);
 	}
 }
 
