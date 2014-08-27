@@ -82,6 +82,7 @@ void why::World::initialize(clan::DisplayWindow &parent_wnd, clan::Canvas &c)
 	m_ball = new BallObject(-1, &c, m_rc_manager->get_sprite(ResourceId::PlayerBall),
 		m_pworld.get_pc(), 1, m_settings);
 	add_object(m_ball);
+
 	m_paddle = new PaddleObject(-1, &c, m_rc_manager->get_sprite(ResourceId::PlayerPaddle), 
 		m_pworld.get_pc(), m_settings);
 	add_object(m_paddle);
