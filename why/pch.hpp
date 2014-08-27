@@ -46,7 +46,6 @@ BOOST_LOG_INLINE_GLOBAL_LOGGER_DEFAULT(why_logger, boost::log::sources::logger_m
 #include <ClanLib/application.h>
 #include <ClanLib/display.h>
 #include <ClanLib/d3d.h>
-#include <ClanLib/swrender.h>
 #include <ClanLib/gl.h>
 #include <ClanLib/physics2d.h>
 #include <ClanLib/sound.h> 

@@ -14,7 +14,6 @@ int why::Program::main ( const std::vector<std::string> &args )
 
 		SetupD3D setup_d3d;
 		SetupGL setup_gl;
-		SetupSWRender setup_swrender;
 
 		SetupSound setup_sound;
 
